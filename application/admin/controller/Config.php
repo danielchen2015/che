@@ -2,15 +2,14 @@
 /**
  * Created by PhpStorm.
  * User: Administrator
- * Date: 2019\5\6 0006
- * Time: 22:17
+ * Date: 2019\5\7 0007
+ * Time: 22:22
  */
 
 namespace app\admin\controller;
 
-use think\Controller;
 
-class Base extends Controller
+class Config
 {
 
 }
