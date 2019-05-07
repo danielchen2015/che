@@ -12,5 +12,19 @@ use think\Controller;
 
 class Base extends Controller
 {
+    protected $userid;
+
+    public function __construct()
+    {
+        parent::__construct();
+        $this->userid = session('userid');
+        if (!$this->userid) {
+            $this->redirect('/admin/User/login');
+        }
+        $this->assign('userid', session('userid'));
+        $this->assign('username', session('username'));
+        $this->assign('roleid', session('roleid'));
+
+    }
 
 }

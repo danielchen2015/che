@@ -8,13 +8,44 @@
 
 namespace app\admin\model;
 
+use think\Db;
 
 class User extends Base
 {
-    public function login($data)
+    public function userLogin($data)
     {
-//        $model = new
-//        $model->query("SELECT id, NAME FROM `t_org`");
+        $returnData = Db::table('che_user')
+            ->field(['userid', 'roleid','username'])
+            ->where([
+                ['username', '=', $data['username']],
+                ['password', '=', $data['password']],
+            ])
+            ->order('userid desc')->limit(1)->select();
+
+        if (empty($returnData)) {
+            return null;
+        } else {
+            return $returnData;
+        }
 
     }
+
+    /**
+     * @param $userid
+     */
+    public function userInfo($userid){
+        $returnData = Db::table('che_user')
+            ->field(['userid', 'roleid','username','password','openid','mobileno','createtime'])
+            ->where([
+                ['userid', '=', $userid],
+            ])
+            ->order('userid desc')->limit(1)->select();
+
+        if (empty($returnData)) {
+            return null;
+        } else {
+            return $returnData;
+        }
+    }
+
 }

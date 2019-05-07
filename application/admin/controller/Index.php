@@ -3,7 +3,7 @@
  * Created by PhpStorm.
  * User: Administrator
  * Date: 2019\5\7 0007
- * Time: 22:22
+ * Time: 23:16
  */
 
 namespace app\admin\controller;
@@ -11,10 +11,11 @@ namespace app\admin\controller;
 
 use think\Request;
 
-class Config extends Base
+class Index extends Base
 {
-    public function setting(Request $request)
+    public function Index(Request $request)
     {
         return view();
     }
+
 }
