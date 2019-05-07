@@ -15,7 +15,7 @@ class User extends Base
     public function userLogin($data)
     {
         $returnData = Db::table('che_user')
-            ->field(['userid', 'roleid','username'])
+            ->field(['userid', 'roleid', 'username'])
             ->where([
                 ['username', '=', $data['username']],
                 ['password', '=', $data['password']],
@@ -33,9 +33,10 @@ class User extends Base
     /**
      * @param $userid
      */
-    public function userInfo($userid){
+    public function userInfo($userid)
+    {
         $returnData = Db::table('che_user')
-            ->field(['userid', 'roleid','username','password','openid','mobileno','createtime'])
+            ->field(['userid', 'roleid', 'username', 'password', 'openid', 'mobileno', 'createtime'])
             ->where([
                 ['userid', '=', $userid],
             ])
@@ -45,6 +46,24 @@ class User extends Base
             return null;
         } else {
             return $returnData;
+        }
+    }
+
+    /**
+     * @param $data
+     * 更新
+     */
+    public function userUpdate($data)
+    {
+        //如果where条件是主键，还可以如下使用
+        if (!empty($data['password'])) {
+            return Db::table('che_user')
+                ->where('userid', '=', $data['userid'])
+                ->update(['password' => $data['password'], 'roleid' => $data['roleid'], 'mobileno' => $data['mobileno'], 'updatetime' => time()]);
+        } else {
+            return Db::table('che_user')
+                ->where('userid', '=', $data['userid'])
+                ->update(['roleid' => $data['roleid'], 'mobileno' => $data['mobileno'], 'updatetime' => time()]);
         }
     }
 

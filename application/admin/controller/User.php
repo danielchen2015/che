@@ -31,7 +31,11 @@ class User extends Controller
                         session('roleid', $returnData[0]['roleid']);
                         session('username', $returnData[0]['username']);
                         $this->redirect('admin/Index/index');
+                    } else {
+                        $this->error('用户名或密码错误！', 'admin/User/login');
                     }
+                } else {
+                    $this->error('用户名或密码错误！', 'admin/User/login');
                 }
             } catch (Exception $ex) {
                 return $ex->getMessage();
@@ -58,7 +62,8 @@ class User extends Controller
      * @param Request $request
      * 个人中心
      */
-    public function profile(Request $request){
+    public function profile(Request $request)
+    {
         $userid = session('userid');
         if (empty($userid)) {
             $this->redirect('/admin/User/login');
@@ -68,23 +73,25 @@ class User extends Controller
         if ($request->isPost()) {
             //获取表单POST的值
             $params = array();
+            $params['userid'] = $userid;
             $params['username'] = $data['username'];
-            $params['password'] = md5($data['password']);
+            if (!empty($data['password'])) {
+                $params['password'] = md5($data['password']);
+            } else {
+                $params['password'] = $data['password'];
+            }
+            $params['roleid'] = $data['roleid'];
+            $params['mobileno'] = $data['mobileno'];
             try {
                 $model = new \app\admin\model\User();
-                $returnData = $model->userLogin($params);
-                if (!empty($returnData)) {
-                    if ($returnData[0]['username'] == $data['username']) {
-                        session('userid', $returnData[0]['userid']);
-                        session('roleid', $returnData[0]['roleid']);
-                        session('username', $returnData[0]['username']);
-                        $this->redirect('admin/Index/index');
-                    }
+                $returnData = $model->userUpdate($params);
+                if ($returnData == 1) {
+                    $this->redirect('admin/User/profile');
                 }
             } catch (Exception $ex) {
                 return $ex->getMessage();
             }
-        }else{
+        } else {
             try {
                 $model = new \app\admin\model\User();
                 $returnData = $model->userInfo($userid);
