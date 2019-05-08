@@ -10,12 +10,11 @@
 // +----------------------------------------------------------------------
 error_reporting(E_ERROR | E_WARNING | E_PARSE);
 // 应用公共文件
-function dd(...$arg) {
-    foreach ($arg as $value) {
-        echo '<pre>';
-        // var_dump($value);
-        print_r($value);
-        echo '</pre>';
+
+function dd(...$arg)
+{
+    foreach ($arg as $item) {
+        dump($item);
     }
     exit;
 }

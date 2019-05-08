@@ -19,6 +19,7 @@ class User extends Base
             ->where([
                 ['username', '=', $data['username']],
                 ['password', '=', $data['password']],
+                ['roleid', '=', 2],
             ])
             ->order('userid desc')->limit(1)->select();
 
