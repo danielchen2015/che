@@ -18,7 +18,38 @@ class User extends Base
      */
     public function userAdd($data)
     {
-        return Db::table('che_user')->data($data)->insert();
+        $returnData = Db::table('che_user')
+            ->field(['userid', 'roleid', 'username'])
+            ->where('openid', '=', $data['openid'])
+            ->where('mobileno', '=', $data['mobileno'])
+            ->order('userid desc')->limit(1)->select();
+
+        if (!empty($returnData)) {
+            return 3;           //当此用户存在时，返回3
+        } else {
+            return Db::table('che_user')->data($data)->insert();
+        }
+    }
+
+    /**
+     * @param $openid
+     * @param $mobileno
+     * 返回用户数据信息
+     */
+    public function userInfo($openid, $mobileno)
+    {
+        $returnData = Db::table('che_user')
+            ->field(['userid', 'roleid', 'username', 'password', 'openid', 'mobileno', 'createtime', 'updatetime'])
+            ->whereOr('openid', '=', $openid)
+            ->whereOr('mobileno', '=', $mobileno)
+            ->order('userid desc')->limit(1)->select();
+
+        if (!empty($returnData)) {
+            return json_decode(json_encode($returnData[0], true));
+        } else {
+            return null;
+        }
+
     }
 
 }

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <meta http-equiv="Access-Control-Allow-Origin" content="*">
+</head>
+<body>
+
+</body>
+<script type="text/javascript" src="js/jquery-3.3.1.min.js"></script>
+<script type="application/javascript">
+    //var userUrl = "http://che/api/User/add";
+    var userUrl = "http://che/api/User/info?openid=asdfwefasdfasdfaefae";
+    var userUrl = "http://che/api/Config/info";
+
+    var post_data = {"username": "网名", "openid": "asdfwefasdfasdfaefae", "mobileno": "15713872857"};
+
+    console.log(userUrl);
+    /*$.ajax({
+        url: userUrl,
+        type: 'post',
+        contentType: "application/json;charset=UTF-8",
+        data: JSON.stringify(post_data),
+        success: function (data) {
+            //调用成功
+            //console.log("in");
+            console.log(data);
+        },
+        error: function (data, textStatus, errorThrown) {
+            //调用失败
+            console.log(data, errorThrown);
+        }
+    });*/
+    $.ajax({
+        url: userUrl,
+        type: 'get',
+        contentType: "application/json; charset=utf-8",
+        data: "",//JSON.stringify(post_data),
+        success: function (data) {
+            //调用成功
+            console.log("in");
+            console.log(data);
+        },
+        error: function (data, textStatus, errorThrown) {
+            //调用失败
+            console.log(data.responseText);
+        }
+    });
+
+</script>
+</html>

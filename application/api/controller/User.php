@@ -10,6 +10,7 @@ namespace app\api\controller;
 
 use think\Exception;
 use think\Request;
+use think\Response;
 
 class User extends Base
 {
@@ -40,7 +41,7 @@ class User extends Base
         $input = $request->getContent();
         $inputData = json_decode($input);
         if (empty($input)) {
-            return Response::create(['code' => 4000, 'msg' => '请求参数错误！'], 'json', 400);
+            return Response::create(['resultCode' => 4000, 'resultMsg' => '请求参数错误！'], 'json', 400);
         }
 
         try {
@@ -54,10 +55,69 @@ class User extends Base
             $model = new \app\api\model\User();
             $returnData = $model->userAdd($params);
             if ($returnData == 1) {
-                return Response::create(['code' => 200, 'msg' => '添加用户成功！'], 'json', 200);
+                return Response::create(['resultCode' => 200, 'resultMsg' => '添加用户成功！'], 'json', 200);
+            } else if ($returnData == 3) {
+                return Response::create(['resultCode' => 201, 'resultMsg' => '此用户已经存在！'], 'json', 200);
+            } else {
+                return Response::create(['resultCode' => 202, 'resultMsg' => '添加用户失败！'], 'json', 200);
             }
         } catch (Exception $e) {
-            return Response::create(['code' => 4000, 'msg' => $e->getMessage()], 'json', 400);
+            return Response::create(['resultCode' => 4000, 'resultMsg' => $e->getMessage()], 'json', 400);
+        }
+
+    }
+
+    /**
+     * @SWG\Get(
+     *     path="/api/User/info?openid={openid}&mobileno={mobileno}",
+     *     tags={"1-用户管理部分接口"},
+     *     operationId="info",
+     *     summary="1.2-获取用户信息",
+     *     description="获取用户信息(为小程序使用)。openid和mobileno两者传一个即可。",
+     *     consumes={"application/json"},
+     *     @SWG\Parameter(
+     *         name="openid",
+     *         in="query",
+     *         description="openid",
+     *         required=false,
+     *         format="string",
+     *     ),
+     *     @SWG\Parameter(
+     *         name="mobileno",
+     *         in="query",
+     *         description="手机号",
+     *         required=false,
+     *         format="string",
+     *     ),
+     *     produces={"application/json"},
+     *     @SWG\Response(
+     *         response="200",
+     *         description="添加成功",
+     *         @SWG\Schema(ref="#/definitions/ApiResponse")
+     *     ),
+     *     security={{"petstore_auth":{"write:info", "read:info"}}}
+     * )
+     */
+    public function info(Request $request)
+    {
+        $openid = $request->param('openid');
+        $mobileno = $request->param('mobileno');
+        if (empty($openid) && empty($mobileno)) {
+            return Response::create(['resultCode' => 4000, 'resultMsg' => '请求参数错误！'], 'json', 400);
+        }
+
+        try {
+
+            $model = new \app\api\model\User();
+            $returnData = $model->userInfo($openid, $mobileno);
+
+            if (!empty($returnData)) {
+                return Response::create(['resultCode' => 200, 'resultMsg' => $returnData], 'json', 200);
+            } else {
+                return Response::create(['resultCode' => 202, 'resultMsg' => '此用户信息不存在！'], 'json', 200);
+            }
+        } catch (Exception $e) {
+            return Response::create(['resultCode' => 4000, 'resultMsg' => $e->getMessage()], 'json', 400);
         }
 
     }
