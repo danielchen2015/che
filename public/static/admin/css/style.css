@@ -329,6 +329,7 @@ ul.sidebar-menu li a.active i {
 
 #main-content {
     margin-left: 210px;
+    height:80%;
 }
 
 .header, .footer {

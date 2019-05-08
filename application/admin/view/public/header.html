@@ -228,9 +228,9 @@
                 </a>
                 <ul class="dropdown-menu extended logout">
                     <div class="log-arrow-up"></div>
-                    <li><a href="#"><i class=" fa fa-suitcase"></i>个人中心</a></li>
-                    <li><a href="#"><i class="fa fa-cog"></i> 设置中心</a></li>
-                    <li><a href="#"><i class="fa fa-bell-o"></i> 我的车辆</a></li>
+                    <li><a href="{:url('User/profile',['id'=>$userid])}"><i class=" fa fa-suitcase"></i>个人中心</a></li>
+                    <li><a href="{:url('Config/setting')}"><i class="fa fa-cog"></i> 设置中心</a></li>
+                    <li><a href="{:url('Vehicle/lists',['userid'=>$userid])}"><i class="fa fa-bell-o"></i> 我的车辆</a></li>
                     <li><a href="{:url('User/loginOut')}"><i class="fa fa-key"></i>退 出</a></li>
                 </ul>
             </li>

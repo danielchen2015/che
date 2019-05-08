@@ -68,4 +68,24 @@ class User extends Base
         }
     }
 
+    /**
+     * @return array|null|\PDOStatement|string|\think\Collection
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\ModelNotFoundException
+     * @throws \think\exception\DbException
+     * 用户列表
+     */
+    public function userLists()
+    {
+        $returnData = Db::table('che_user')
+            ->field(['userid', 'roleid', 'username', 'password', 'openid', 'mobileno', 'createtime'])
+            ->order('userid desc')->select();
+
+        if (empty($returnData)) {
+            return null;
+        } else {
+            return $returnData;
+        }
+    }
+
 }

@@ -11,6 +11,7 @@ namespace app\admin\controller;
 use think\Controller;
 use think\Exception;
 use think\Request;
+use think\Response;
 
 class User extends Controller
 {
@@ -64,8 +65,9 @@ class User extends Controller
      */
     public function profile(Request $request)
     {
-        $userid = session('userid');
-        if (empty($userid)) {
+        $userid = $request->param('id');
+        $sessionuserid = session('userid');
+        if (empty($sessionuserid)) {
             $this->redirect('/admin/User/login');
         }
 
@@ -73,7 +75,7 @@ class User extends Controller
         if ($request->isPost()) {
             //获取表单POST的值
             $params = array();
-            $params['userid'] = $userid;
+            $params['userid'] = $data['userid'];
             $params['username'] = $data['username'];
             if (!empty($data['password'])) {
                 $params['password'] = md5($data['password']);
@@ -85,9 +87,7 @@ class User extends Controller
             try {
                 $model = new \app\admin\model\User();
                 $returnData = $model->userUpdate($params);
-                if ($returnData == 1) {
-                    $this->redirect('admin/User/profile');
-                }
+                $this->redirect('admin/User/lists');
             } catch (Exception $ex) {
                 return $ex->getMessage();
             }
@@ -105,7 +105,30 @@ class User extends Controller
             $this->assign('profile', $returnData[0]);
         }
 
+        $this->assign('userid', $userid);
+
         return view('profile');
+    }
+
+    /**
+     * @param Response $request
+     * 用户列表
+     */
+    public function lists(Request $request)
+    {
+        try {
+            $model = new \app\admin\model\User();
+            $returnData = $model->userLists();
+            if (!empty($returnData)) {
+
+            }
+        } catch (Exception $ex) {
+            return $ex->getMessage();
+        }
+
+        $this->assign('users', $returnData);
+
+        return view();
     }
 
 }
