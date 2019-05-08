@@ -7,9 +7,22 @@
  */
 
 namespace app\admin\model;
+use think\Db;
 
-
-class Vehicle
+class Vehicle extends Base
 {
+    /**
+     * @param Response $request
+     * 用户列表
+     */
+   public function vehiclelist(){
+       $returnData = Db::table('che_vehicle')
+           ->order('id desc')->limit(1)->select();
 
+       if (empty($returnData)) {
+           return null;
+       } else {
+           return $returnData;
+       }
+   }
 }

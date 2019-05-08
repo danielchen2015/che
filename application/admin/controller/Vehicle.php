@@ -9,7 +9,26 @@
 namespace app\admin\controller;
 
 
-class Vehicle
-{
+use think\Controller;
+use think\Exception;
+use think\Request;
 
+class Vehicle extends Controller
+{
+    public function vlist(Request $request){
+        try {
+            $model = new \app\admin\model\Vehicle();
+            $returnData = $model->vehiclelist();
+            if (!empty($returnData)) {
+
+            }
+        } catch (Exception $ex) {
+            return $ex->getMessage();
+        }
+
+        $this->assign('vehiclelist', $returnData);
+        print_r($returnData);
+
+        return view("list");
+    }
 }
