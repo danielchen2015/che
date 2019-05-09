@@ -24,7 +24,8 @@ return [
     'app_trace' => false,
     // 是否支持多模块
     'app_multi_module' => true,
-
+    //文件上传接口地址
+    'file_server_url' => 'http://che.xingyizxmr.com',
     // 入口自动绑定模块
     'auto_bind_module' => false,
     // 注册的根命名空间
