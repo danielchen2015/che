@@ -72,7 +72,6 @@
         this.clear()
         return
       }
-      
       this.$hidden.val('')
       this.$hidden.attr('name', '')
       this.$input.attr('name', this.name)
@@ -83,6 +82,18 @@
         var element = this.$element
 
         reader.onload = function(e) {
+          console.log("success"+e.target.result);
+          var postUrl = "/api/upload/uploadimg";
+          //console.log(postUrl);
+          $.post(postUrl,{"img64":e.target.result},function(mresult){
+
+            if(mresult.resultCode == 200){		//得到上传的图片地址
+              console.log(mresult.resultMsg);
+              preview.parent().find('.sss').val(mresult.resultMsg);
+            }else{
+              alert(mresult.resultMsg);
+            }
+          });
           preview.html('<img src="' + e.target.result + '" ' + (preview.css('max-height') != 'none' ? 'style="max-height: ' + preview.css('max-height') + ';"' : '') + ' />')
           element.addClass('fileupload-exists').removeClass('fileupload-new')
         }

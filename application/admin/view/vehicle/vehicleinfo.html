@@ -20,6 +20,8 @@
     <!-- Custom styles for this template -->
     <link href="__CSS__/style.css" rel="stylesheet">
     <link href="__CSS__/style-responsive.css" rel="stylesheet" />
+    <link rel="stylesheet" type="text/css" href="__ASSETS__/bootstrap-fileupload/bootstrap-fileupload.css" />
+
 
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 tooltipss and media queries -->
     <!--[if lt IE 9]>
@@ -45,19 +47,7 @@
                         </header>
                         <div class="panel-body">
                             <div class="form">
-                                <form class="cmxform form-horizontal tasi-form" id="signupForm" method="get" action="">
-                                    <div class="form-group ">
-                                        <label for="firstname" class="control-label col-lg-2">Firstname</label>
-                                        <div class="col-lg-10">
-                                            <input class=" form-control" id="firstname" name="firstname" type="text" />
-                                        </div>
-                                    </div>
-                                    <div class="form-group ">
-                                        <label for="lastname" class="control-label col-lg-2">Lastname</label>
-                                        <div class="col-lg-10">
-                                            <input class=" form-control" id="lastname" name="lastname" type="text" />
-                                        </div>
-                                    </div>
+                                <form class="cmxform form-horizontal tasi-form"  action="{:url('Vehicle/modifyvehile')}" method="post">
                                     <div class="form-group ">
                                         <label for="price" class="control-label col-lg-2">价格</label>
                                         <div class="col-lg-10">
@@ -196,13 +186,37 @@
                                     </div>
 <!--                                    /*     "vehicleimgs": "车辆照片json格式"-->
 <!--                                    *     "weixinimg": "微信二维码地址"-->
-
+                                    <div class="form-group last">
+                                        <label class="control-label col-md-2">微信头像</label>
+                                        <div class="col-md-9">
+                                            <div class="fileupload fileupload-new" name="datass" data-provides="fileupload"><input name="data[weixinimg]" class="sss" value="<?=$vehicleinfo['weixinimg']?>" type="hidden">
+                                                <div class="fileupload-new thumbnail" style="width: 200px; height: 150px;">
+                                                    <?php if(empty($vehicleinfo['weixinimg'])){
+                                                      echo '<img src="/upload/noimage.png" alt="">';
+                                                    }else{
+                                                      echo '<img src="'.$vehicleinfo['weixinimg'].'" alt="">';
+                                                    }
+                                                    ?>
+                                                </div>
+                                                <div class="fileupload-preview fileupload-exists thumbnail" style="max-width: 200px; max-height: 150px; line-height: 10px;"></div>
+                                                <div>
+                                                   <span class="btn btn-white btn-file">
+                                                   <span class="fileupload-new"><i class="fa fa-paper-clip"></i> 选择图片</span>
+                                                   <span class="fileupload-exists"><i class="fa fa-undo"></i> 改变图片</span>
+                                                   <input type="file" class="default">
+                                                   </span>
+                                                    <a href="#" class="btn btn-danger fileupload-exists" data-dismiss="fileupload"><i class="fa fa-trash"></i> 移除图片</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                     <div class="form-group">
                                         <div class="col-lg-offset-2 col-lg-10">
                                             <button class="btn btn-danger" type="submit">Save</button>
                                             <button class="btn btn-default" type="button">Cancel</button>
                                         </div>
                                     </div>
+
                                 </form>
                             </div>
                         </div>
@@ -233,7 +247,7 @@
 
 <!--script for this page-->
 <script src="__JS__/form-validation-script.js"></script>
-
+<script type="text/javascript" src="__ASSETS__/bootstrap-fileupload/bootstrap-fileupload.js"></script>
 
 </body>
 </html>

@@ -7,6 +7,8 @@
  */
 
 namespace app\api\controller;
+use think\Request;
+use think\Response;
 
 
 class Upload extends Base
