@@ -25,4 +25,20 @@ class Vehicle extends Base
            return $returnData;
        }
    }
+
+    /**
+     * @param Response $request
+     * 用户列表
+     */
+    public function vehicleinfo($id){
+        $returnData = Db::table('che_vehicle')
+            ->where(["id"=>$id])
+            ->select()[0];
+
+        if (empty($returnData)) {
+            return null;
+        } else {
+            return $returnData;
+        }
+    }
 }

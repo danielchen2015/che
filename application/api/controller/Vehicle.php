@@ -99,6 +99,8 @@ class Vehicle extends Base
             $params['opr_user'] = $inputData->opr_user;
 
             $model = new \app\api\model\Vehicle();
+            //print_r($params);
+            //exit;
             $returnData = $model->vehicleAdd($params);
             if ($returnData == 1) {
                 return Response::create(['resultCode' => 200, 'resultMsg' => '添加车辆成功！'], 'json', 200);

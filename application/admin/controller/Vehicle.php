@@ -27,8 +27,24 @@ class Vehicle extends Controller
         }
 
         $this->assign('vehiclelist', $returnData);
-        print_r($returnData);
+        //print_r($returnData);
 
         return view("list");
+    }
+
+    public function vehicleinfo(Request $request){
+        try {
+            $model = new \app\admin\model\Vehicle();
+            $id=$request->get("id");
+            $returnData = $model->vehicleinfo($id);
+
+        } catch (Exception $ex) {
+            return $ex->getMessage();
+        }
+        print_r($returnData);
+        $this->assign('vehicleinfo', $returnData);
+        //print_r($returnData);
+
+        return view("vehicleinfo");
     }
 }

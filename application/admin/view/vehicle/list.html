@@ -57,13 +57,13 @@
                              <?php foreach($vehiclelist as $key =>$value){
                              echo '<tr>
                                     <td><a href="#">'.$value['id'].'</a></td>
-                                    <td class="hidden-phone">'.$value['models'].'</td>
+                                    <td class="hidden-phone">'.$value['modessls'].'</td>
                                     <td>'.$value['price'].'</td>
                                     <td><span class="label label-info label-mini">Due</span></td>
                                     <td>
-                                        <button class="btn btn-success btn-xs"><i class="fa fa-check"></i></button>
-                                        <button class="btn btn-primary btn-xs"><i class="fa fa-pencil"></i></button>
-                                        <button class="btn btn-danger btn-xs"><i class="fa fa-trash-o "></i></button>
+                                        <a class="btn btn-success btn-sm" href="/admin/vehicle/vehicleinfo?id='.$value['id'].'"><i class="fa fa-fw fa-edit"></i></a>
+                                        <button class="btn btn-primary btn-sm"><i class="fa fa-pencil"></i></button>
+                                        <button class="btn btn-danger btn-sm"><i class="fa fa-trash-o "></i></button>
                                     </td>
                                 </tr>';
                               }
