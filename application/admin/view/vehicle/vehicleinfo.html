@@ -8,7 +8,7 @@
     <meta name="keyword" content="FlatLab, Dashboard, Bootstrap, Admin, Template, Theme, Responsive, Fluid, Retina">
     <link rel="shortcut icon" href="img/favicon.png">
 
-    <title>Form Validation</title>
+    <title>车辆信息</title>
 
     <!-- Bootstrap core CSS -->
     <link href="__CSS__/bootstrap.min.css" rel="stylesheet">
@@ -20,6 +20,7 @@
     <!-- Custom styles for this template -->
     <link href="__CSS__/style.css" rel="stylesheet">
     <link href="__CSS__/style-responsive.css" rel="stylesheet" />
+    <link href="__ASSETS__/dropzone/css/dropzone.css" rel="stylesheet"/>
     <link rel="stylesheet" type="text/css" href="__ASSETS__/bootstrap-fileupload/bootstrap-fileupload.css" />
 
 
@@ -210,6 +211,16 @@
                                             </div>
                                         </div>
                                     </div>
+                                    <!-- page start-->
+                                    <section class="panel">
+                                        <header class="panel-heading">
+                                            Dropzone File Upload
+                                        </header>
+                                        <div class="panel-body">
+                                            <div action="__ASSETS__/dropzone/upload.php" class="dropzone" id="my-awesome-dropzone"></div>
+                                        </div>
+                                    </section>
+                                    <!-- page end-->
                                     <div class="form-group">
                                         <div class="col-lg-offset-2 col-lg-10">
                                             <button class="btn btn-danger" type="submit">Save</button>
@@ -247,6 +258,7 @@
 
 <!--script for this page-->
 <script src="__JS__/form-validation-script.js"></script>
+<script src="__ASSETS__/dropzone/dropzone.js"></script>
 <script type="text/javascript" src="__ASSETS__/bootstrap-fileupload/bootstrap-fileupload.js"></script>
 
 </body>

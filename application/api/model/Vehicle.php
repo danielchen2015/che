@@ -21,4 +21,14 @@ class Vehicle extends Base
         return Db::table('che_vehicle')->data($data)->insert();
 
     }
+    /**
+     * @param $data
+     * 车辆信息
+     */
+    public function vehicleinfo($data)
+    {
+
+        return Db::table('che_vehicle')->data($data)->insert();
+
+    }
 }

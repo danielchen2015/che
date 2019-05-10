@@ -22,11 +22,11 @@ class Vehicle extends Base
 
     /**
      * @SWG\Post(
-     *     path="/api/User/add",
-     *     tags={"1-用户管理部分接口"},
+     *     path="/api/vehicle/add",
+     *     tags={"3-车辆管理部分接口"},
      *     operationId="add",
-     *     summary="1.1-添加用户",
-     *     description="添加用户(为小程序使用)。",
+     *     summary="3.1-添加车辆",
+     *     description="添加车辆(为小程序使用)。",
      *     consumes={"application/json"},
      *     @SWG\Property(example={
      *     "price" : "价格",
@@ -106,6 +106,50 @@ class Vehicle extends Base
                 return Response::create(['resultCode' => 200, 'resultMsg' => '添加车辆成功！'], 'json', 200);
             } else {
                 return Response::create(['resultCode' => 202, 'resultMsg' => '添加车辆失败！'], 'json', 200);
+            }
+        } catch (Exception $e) {
+            return Response::create(['resultCode' => 4000, 'resultMsg' => $e->getMessage()], 'json', 400);
+        }
+    }
+    /**
+     * @SWG\Post(
+     *     path="/api/vehicle/getvehicleinfo",
+     *     tags={"3-车辆管理部分接口"},
+     *     operationId="getvehicleinfo",
+     *     summary="3.2-获取车辆信息",
+     *     description="获取车辆信息(为小程序使用)。",
+     *     consumes={"application/json"},
+     *     @SWG\Property(example={
+     *     "id" : "车辆id",
+     *      ),
+     *     produces={"application/json"},
+     *     @SWG\Response(
+     *         response="200",
+     *         description="",
+     *         @SWG\Schema(ref="#/definitions/ApiResponse")
+     *     ),
+     *     security={{"petstore_auth":{"write:getvehicleinfo", "read:getvehicleinfo"}}}
+     * )
+     */
+    public function getvehicleinfo(Request $request)
+    {
+        $input = $request->getContent();
+        $inputData = json_decode($input);
+        if (empty($input)) {
+            return Response::create(['resultCode' => 4000, 'resultMsg' => '请求参数错误！'], 'json', 400);
+        }
+        try {
+            $params = array();
+            $params['id'] = $inputData->id;
+
+            $model = new \app\api\model\Vehicle();
+            //print_r($params);
+            //exit;
+            $returnData = $model->vehicleinfo($params);
+            if (!empty($returnData)) {
+                return Response::create(['resultCode' => 200, 'resultMsg' => $returnData], 'json', 200);
+            } else {
+                return Response::create(['resultCode' => 202, 'resultMsg' => '获取车辆失败！'], 'json', 200);
             }
         } catch (Exception $e) {
             return Response::create(['resultCode' => 4000, 'resultMsg' => $e->getMessage()], 'json', 400);
