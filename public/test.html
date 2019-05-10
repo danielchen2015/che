@@ -13,11 +13,12 @@
     //var userUrl = "http://che/api/User/add";
     var userUrl = "http://che/api/User/info?openid=asdfwefasdfasdfaefae";
     var userUrl = "http://che/api/Config/info";
+    var userUrl = "http://che/api/Vehicle/getvehicleinfo";
 
-    var post_data = {"username": "网名", "openid": "asdfwefasdfasdfaefae", "mobileno": "15713872857"};
+    var post_data = {"id": "1"};
 
     console.log(userUrl);
-    /*$.ajax({
+    $.ajax({
         url: userUrl,
         type: 'post',
         contentType: "application/json;charset=UTF-8",
@@ -31,12 +32,12 @@
             //调用失败
             console.log(data, errorThrown);
         }
-    });*/
-    $.ajax({
+    });
+    /*$.ajax({
         url: userUrl,
         type: 'get',
         contentType: "application/json; charset=utf-8",
-        data: "",//JSON.stringify(post_data),
+        data: JSON.stringify(post_data),
         success: function (data) {
             //调用成功
             console.log("in");
@@ -46,7 +47,7 @@
             //调用失败
             console.log(data.responseText);
         }
-    });
+    });*/
 
 </script>
 </html>

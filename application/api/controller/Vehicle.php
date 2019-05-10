@@ -121,7 +121,7 @@ class Vehicle extends Base
      *     consumes={"application/json"},
      *     @SWG\Property(example={
      *     "id" : "车辆id",
-     *      ),
+     *      }),
      *     produces={"application/json"},
      *     @SWG\Response(
      *         response="200",

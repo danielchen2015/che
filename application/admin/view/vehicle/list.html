@@ -54,6 +54,7 @@
                             </tr>
                             </thead>
                             <tbody>
+                            {if condition="!empty($vehiclelist)"}
                              <?php foreach($vehiclelist as $key =>$value){
                              echo '<tr>
                                     <td><a href="#">'.$value['id'].'</a></td>
@@ -68,6 +69,7 @@
                                 </tr>';
                               }
                              ?>
+                            {/if}
                             </tbody>
                         </table>
                     </section>

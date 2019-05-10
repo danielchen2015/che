@@ -27,8 +27,15 @@ class Vehicle extends Base
      */
     public function vehicleinfo($data)
     {
+        $returnData = Db::table('che_vehicle')
+            ->where('id', '=', $data['id'])
+            ->select();
 
-        return Db::table('che_vehicle')->data($data)->insert();
+        if (!empty($returnData)) {
+            return json_decode(json_encode($returnData[0], true));
+        } else {
+            return null;
+        }
 
     }
 }
