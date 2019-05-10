@@ -17,7 +17,8 @@ class Vehicle extends Base
      */
     public function vehicleAdd($data)
     {
-
+        //print_r($data);
+        //exit;
         return Db::table('che_vehicle')->data($data)->insert();
 
     }
@@ -27,12 +28,26 @@ class Vehicle extends Base
      */
     public function vehicleinfo($data)
     {
-        $returnData = Db::table('che_vehicle')
-            ->where('id', '=', $data['id'])
-            ->select();
+        $leval=0;
+        $parameter="";
+        foreach ($data as $key=>$value){
+            $leval++;
+            $parameter=$key;
+        }
+        if($leval==1){
+            $returnData = Db::table('che_vehicle')
+                ->where($parameter, '=', $data[$parameter])
+                ->select();
+        }else{
+            $returnData = Db::table('che_vehicle')
+                ->where('id', '=', $data['id'])
+                ->where('opr_user', '=', $data['opr_user'])
+                ->select();
+        }
+
 
         if (!empty($returnData)) {
-            return json_decode(json_encode($returnData[0], true));
+            return json_decode(json_encode($returnData, true));
         } else {
             return null;
         }

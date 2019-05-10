@@ -37,17 +37,18 @@ class Upload extends Base
     public function uploadimg(Request $request)
     {
         $base64_img = $request->post("img64");
-        $up_dir = './upload/';//存放在当前目录的upload文件夹下
+        $up_dir = './upload/'.date('Ymd').'/';//存放在当前目录的upload文件夹下
         if (!file_exists($up_dir)) {
             mkdir($up_dir, 0777);
         }
         if (preg_match('/^(data:\s*image\/(\w+);base64,)/', $base64_img, $result)) {
             $type = $result[2];
             if (in_array($type, array('pjpeg', 'jpeg', 'jpg', 'gif', 'bmp', 'png'))) {
-                $new_file = $up_dir . date('YmdHis_') . '.' . $type;
+                $new_file = $up_dir . $this->getRandomString(10) . '.' . $type;
                 if (file_put_contents($new_file, base64_decode(str_replace($result[1], '', $base64_img)))) {
+                    //print_r($new_file);
                     $img_path = str_replace('../../..', '', $new_file);
-                    $img_path = str_replace('.', '', $img_path);
+                    $img_path = str_replace('./', '/', $img_path);
                     //echo '图片上传成功</br>![](' .$img_path. ')';
                     return Response::create(['resultCode' => 200, 'resultMsg' => $img_path], 'json', 200);
                 } else {
@@ -66,6 +67,20 @@ class Upload extends Base
         }
         //echo $imagebase64;
         //exit;
+    }
+   /*
+    * 生成随机数
+    * */
+    function getRandomString($len, $chars=null)
+    {
+        if (is_null($chars)){
+            $chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+        }
+        mt_srand(10000000*(double)microtime());
+        for ($i = 0, $str = '', $lc = strlen($chars)-1; $i < $len; $i++){
+            $str .= $chars[mt_rand(0, $lc)];
+        }
+        return $str;
     }
 
 }

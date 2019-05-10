@@ -13,9 +13,35 @@
     //var userUrl = "http://che/api/User/add";
     var userUrl = "http://che/api/User/info?openid=asdfwefasdfasdfaefae";
     var userUrl = "http://che/api/Config/info";
-    var userUrl = "http://che/api/Vehicle/getvehicleinfo";
+    var userUrl = "http://che/api/vehicle/add";
 
-    var post_data = {"id": "1"};
+    var post_data = {
+        "price":"10",
+        "models":"宝马五系",
+        "boarddateyear":"2016",
+        "boarddatemonth":"10",
+        "proddateyear":"2017",
+        "proddatemonth":"5",
+        "realmileage":"30000",
+        "condition":"良好",
+        "contacttel":"15821562661",
+        "vehicleimgs":["/upload/20190511/JjTfWAF0DD.png","/upload/20190511/JjTfWAF0DD.png","/upload/20190511/JjTfWAF0DD.png","/upload/20190511/JjTfWAF0DD.png","/upload/20190511/JjTfWAF0DD.png","/upload/20190511/JjTfWAF0DD.png","/upload/20190511/JjTfWAF0DD.png","/upload/20190511/JjTfWAF0DD.png","/upload/20190511/JjTfWAF0DD.png","/upload/20190511/JjTfWAF0DD.png","/upload/20190511/JjTfWAF0DD.png"],
+        "weixinimg":"",
+        "guideprice":"30000",
+        "displacement":"1.4T",
+        "configuration":"高",
+        "loc_province":"江苏",
+        "loc_city":"盐城",
+        "loc_area":"滨海",
+        "transfer_times":"2",
+        "fixprice":"22200",
+        "status":"1",
+        "popularity_index":"3",
+        "dial_index":"3",
+        "score":"3",
+        "opr_user":"12"
+
+    };
 
     console.log(userUrl);
     $.ajax({

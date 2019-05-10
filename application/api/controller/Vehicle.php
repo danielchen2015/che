@@ -81,7 +81,7 @@ class Vehicle extends Base
             $params['realmileage'] = $inputData->realmileage;
             $params['condition'] = $inputData->condition;
             $params['contacttel'] = $inputData->contacttel;
-            $params['vehicleimgs'] = $inputData->vehicleimgs;
+            $params['vehicleimgs'] = json_encode($inputData->vehicleimgs,JSON_UNESCAPED_SLASHES);
             $params['weixinimg'] = $inputData->weixinimg;
             $params['guideprice'] = $inputData->guideprice;
             $params['displacement'] = $inputData->displacement;
@@ -97,6 +97,8 @@ class Vehicle extends Base
             $params['score'] = $inputData->score;
             $params['opr_datetime'] = time();
             $params['opr_user'] = $inputData->opr_user;
+            /*add code =0 不然没法插入数据*/
+            $params['code'] = 0;
 
             $model = new \app\api\model\Vehicle();
             //print_r($params);
@@ -114,13 +116,14 @@ class Vehicle extends Base
     /**
      * @SWG\Post(
      *     path="/api/vehicle/getvehicleinfo",
-     *     tags={"3-车辆管理部分接口"},
+     *     tags={"3-车辆管理部分接口，可只传一个参数，获取我发布的车辆也是在这里"},
      *     operationId="getvehicleinfo",
      *     summary="3.2-获取车辆信息",
      *     description="获取车辆信息(为小程序使用)。",
      *     consumes={"application/json"},
      *     @SWG\Property(example={
      *     "id" : "车辆id",
+     *     "opr_user" : "发布人员编号"
      *      }),
      *     produces={"application/json"},
      *     @SWG\Response(
@@ -134,13 +137,15 @@ class Vehicle extends Base
     public function getvehicleinfo(Request $request)
     {
         $input = $request->getContent();
-        $inputData = json_decode($input);
+        $inputData = json_decode($input,true);
         if (empty($input)) {
             return Response::create(['resultCode' => 4000, 'resultMsg' => '请求参数错误！'], 'json', 400);
         }
         try {
             $params = array();
-            $params['id'] = $inputData->id;
+            foreach ($inputData as $key=>$value){
+                if(!empty($value)) $params[$key] = $value;
+            }
 
             $model = new \app\api\model\Vehicle();
             //print_r($params);
