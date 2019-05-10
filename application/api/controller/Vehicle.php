@@ -38,7 +38,7 @@ class Vehicle extends Base
      *     "realmileage": "真实里程"
      *     "condition": "车况描述"
      *     "contacttel": "联系电话"
-     *     "vehicleimgs": "车辆照片json格式"
+     *     "vehicleimgs": "车辆照片json格式 ["/upload/20190511/JjTfWAF0DD.png","/upload/20190511/JjTfWAF0DD.png","/upload/20190511/JjTfWAF0DD.png","/upload/20190511/JjTfWAF0DD.png","/upload/20190511/JjTfWAF0DD.png","/upload/20190511/JjTfWAF0DD.png","/upload/20190511/JjTfWAF0DD.png","/upload/20190511/JjTfWAF0DD.png","/upload/20190511/JjTfWAF0DD.png","/upload/20190511/JjTfWAF0DD.png","/upload/20190511/JjTfWAF0DD.png"]"
      *     "weixinimg": "微信二维码地址"
      *     "guideprice": "新车指导价"
      *     "displacement": "汽车排量"
