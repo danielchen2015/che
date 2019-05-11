@@ -22,10 +22,13 @@ class User extends Base
      *     summary="1.1-添加用户",
      *     description="添加用户(为小程序使用)。",
      *     consumes={"application/json"},
-     *     @SWG\Property(example={
-     *     "username" : "用户姓名",
-     *     "openid": "小程序获取的openid",
-     *     "mobileno": "小程序获取到的用户手机号"
+     *     @SWG\Parameter(
+     *         name="body",
+     *         in="body",
+     *         description="Json格式",
+     *         required=true,
+     *         type="string",
+     *         @SWG\Property(example={"username" : "用户姓名","openid": "小程序获取的openid","mobileno": "小程序获取到的用户手机号"})
      *      ),
      *     produces={"application/json"},
      *     @SWG\Response(

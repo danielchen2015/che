@@ -21,7 +21,7 @@ class Config extends Base
     public function configInfo()
     {
         $returnData = Db::table('che_config')
-            ->field(['title', 'company', 'mobile', 'telno', 'weixinimg', 'adimgs'])->select();
+            ->field(['title', 'company', 'mobile', 'telno', 'weixinimg1', 'weixinimg2', 'adimg1', 'adimg2', 'adimg3', 'adimg4'])->select();
 
         if (empty($returnData)) {
             return null;
@@ -38,7 +38,7 @@ class Config extends Base
     {
         return Db::table('che_config')
             ->where('1', '=', 1)
-            ->update(['title' => $data['title'], 'company' => $data['company'], 'mobile' => $data['mobile'], 'telno' => $data['telno'], 'weixinimg' => $data['weixinimg'], 'adimgs' => $data['adimgs']]);
+            ->update(['title' => $data['title'], 'company' => $data['company'], 'mobile' => $data['mobile'], 'telno' => $data['telno'], 'weixinimg1' => $data['weixinimg1'], 'weixinimg2' => $data['weixinimg2'], 'adimg1' => $data['adimg1'], 'adimg2' => $data['adimg2'], 'adimg3' => $data['adimg3'], 'adimg4' => $data['adimg4']]);
     }
 
 }

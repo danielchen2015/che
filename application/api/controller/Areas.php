@@ -17,7 +17,7 @@ class Areas extends Base
     /**
      * @SWG\Get(
      *     path="/api/areas/getprovince",
-     *     tags={"4-地区部分接口"},
+     *     tags={"5-地区部分接口"},
      *     operationId="getprovince",
      *     summary="4.1-获取省份信息",
      *     description="获取省份信息(为小程序使用)",
@@ -25,14 +25,10 @@ class Areas extends Base
      *     produces={"application/json"},
      *     @SWG\Response(
      *         response="200",
-     *         description="[{
-     *           "Id": 110000,
-     *          "Name": "北京市",
-     *          "Pid": 0
-     *          }]",
+     *         description="JSON格式",
      *         @SWG\Schema(ref="#/definitions/ApiResponse")
      *     ),
-     *     security={{"petstore_auth":{"write:info", "read:info"}}}
+     *     security={{"petstore_auth":{"write:getprovince", "read:getprovince"}}}
      * )
      */
     public function getprovince()
@@ -52,24 +48,19 @@ class Areas extends Base
     }
     /**
      * @SWG\Get(
-     *     path="/api/areas/getprovince?proviceid=110000",
-     *     tags={"4-地区部分接口"},
-     *     operationId="getprovince",
+     *     path="/api/areas/getcity?proviceid=110000",
+     *     tags={"5-地区部分接口"},
+     *     operationId="getcity",
      *     summary="4.2-根据省id获取市信息",
      *     description="获取市信息(为小程序使用)",
      *     consumes={"application/json"},
      *     produces={"application/json"},
      *     @SWG\Response(
      *         response="200",
-     *         description="[{
-     *          "id": 1,
-     *          "cityid": "110100",
-     *          "city": "北京市",
-     *          "provinceid": "110000"
-     *          }]",
+     *         description="JSON格式",
      *         @SWG\Schema(ref="#/definitions/ApiResponse")
      *     ),
-     *     security={{"petstore_auth":{"write:info", "read:info"}}}
+     *     security={{"petstore_auth":{"write:getcity", "read:getcity"}}}
      * )
      */
     public function getcity(Request $request)
@@ -94,7 +85,7 @@ class Areas extends Base
     /**
      * @SWG\Get(
      *     path="/api/areas/getarea?cityid=110900",
-     *     tags={"4-地区部分接口"},
+     *     tags={"5-地区部分接口"},
      *     operationId="getarea",
      *     summary="4.3-根据市id获取地区信息",
      *     description="获取地区信息(为小程序使用)",
@@ -102,16 +93,10 @@ class Areas extends Base
      *     produces={"application/json"},
      *     @SWG\Response(
      *         response="200",
-     *         description="[
-     *           {
-     *          "id": 1,
-     *          "areaid": "110101",
-     *          "area": "东城区",
-     *          "cityid": "110100"
-     *          }]",
+     *         description="JSON格式",
      *         @SWG\Schema(ref="#/definitions/ApiResponse")
      *     ),
-     *     security={{"petstore_auth":{"write:info", "read:info"}}}
+     *     security={{"petstore_auth":{"write:getarea", "read:getarea"}}}
      * )
      */
     public function getarea(Request $request)

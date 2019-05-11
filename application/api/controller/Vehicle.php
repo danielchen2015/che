@@ -28,32 +28,38 @@ class Vehicle extends Base
      *     summary="3.1-添加车辆",
      *     description="添加车辆(为小程序使用)。",
      *     consumes={"application/json"},
-     *     @SWG\Property(example={
+     *     @SWG\Parameter(
+     *         name="body",
+     *         in="body",
+     *         description="Json格式",
+     *         required=true,
+     *         type="string",
+     *         @SWG\Property(example={
      *     "price" : "价格",
      *     "models": "车型",
-     *     "boarddateyear": "上牌日期年份"
-     *     "boarddatemonth": "上牌日期月份"*
-     *     "proddateyear": "出厂日期年份"
-     *     "proddatemonth": "出厂日期月份"
-     *     "realmileage": "真实里程"
-     *     "condition": "车况描述"
-     *     "contacttel": "联系电话"
-     *     "vehicleimgs": "车辆照片json格式 ["/upload/20190511/JjTfWAF0DD.png","/upload/20190511/JjTfWAF0DD.png","/upload/20190511/JjTfWAF0DD.png","/upload/20190511/JjTfWAF0DD.png","/upload/20190511/JjTfWAF0DD.png","/upload/20190511/JjTfWAF0DD.png","/upload/20190511/JjTfWAF0DD.png","/upload/20190511/JjTfWAF0DD.png","/upload/20190511/JjTfWAF0DD.png","/upload/20190511/JjTfWAF0DD.png","/upload/20190511/JjTfWAF0DD.png"]"
-     *     "weixinimg": "微信二维码地址"
-     *     "guideprice": "新车指导价"
-     *     "displacement": "汽车排量"
-     *     "configuration": "车辆配置"
-     *     "loc_province": "车辆所在地省份"
-     *     "loc_city": "车辆所在地城市"
-     *     "loc_area": "车辆所在地区域"
-     *     "transfer_times": "过户次数"
-     *     "fixprice": "一口价"
-     *     "status": "状态"
-     *     "popularity_index": "人气指数"
-     *     "dial_index": "拨号指数"
-     *     "score": "会员积分"
-     *     "opr_user": "发布人员编号"
-     *      }),
+     *     "boarddateyear": "上牌日期年份",
+     *     "boarddatemonth": "上牌日期月份",
+     *     "proddateyear": "出厂日期年份",
+     *     "proddatemonth": "出厂日期月份",
+     *     "realmileage": "真实里程",
+     *     "condition": "车况描述",
+     *     "contacttel": "联系电话",
+     *     "vehicleimgs": "车辆照片json格式",
+     *     "weixinimg": "微信二维码地址",
+     *     "guideprice": "新车指导价",
+     *     "displacement": "汽车排量",
+     *     "configuration": "车辆配置",
+     *     "loc_province": "车辆所在地省份",
+     *     "loc_city": "车辆所在地城市",
+     *     "loc_area": "车辆所在地区域",
+     *     "transfer_times": "过户次数",
+     *     "fixprice": "一口价",
+     *     "status": "状态",
+     *     "popularity_index": "人气指数",
+     *     "dial_index": "拨号指数",
+     *     "score": "会员积分",
+     *     "opr_user": "发布人员编号"})
+     *     ),
      *     produces={"application/json"},
      *     @SWG\Response(
      *         response="200",
@@ -116,19 +122,23 @@ class Vehicle extends Base
     /**
      * @SWG\Post(
      *     path="/api/vehicle/getvehicleinfo",
-     *     tags={"3-车辆管理部分接口，可只传一个参数，获取我发布的车辆也是在这里"},
+     *     tags={"3-车辆管理部分接口"},
      *     operationId="getvehicleinfo",
      *     summary="3.2-获取车辆信息",
-     *     description="获取车辆信息(为小程序使用)。",
+     *     description="获取车辆信息(为小程序使用)。可只传一个参数，获取我发布的车辆也是在这里",
      *     consumes={"application/json"},
-     *     @SWG\Property(example={
-     *     "id" : "车辆id",
-     *     "opr_user" : "发布人员编号"
-     *      }),
+     *     @SWG\Parameter(
+     *         name="body",
+     *         in="body",
+     *         description="Json格式",
+     *         required=true,
+     *         type="string",
+     *         @SWG\Property(example={"id": "车辆id","opr_user": "发布人员编号"})
+     *      ),
      *     produces={"application/json"},
      *     @SWG\Response(
      *         response="200",
-     *         description="",
+     *         description="获取成功",
      *         @SWG\Schema(ref="#/definitions/ApiResponse")
      *     ),
      *     security={{"petstore_auth":{"write:getvehicleinfo", "read:getvehicleinfo"}}}

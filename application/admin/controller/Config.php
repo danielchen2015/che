@@ -43,8 +43,12 @@ class Config extends Base
             $params['company'] = $data['company'];
             $params['mobile'] = $data['mobile'];
             $params['telno'] = $data['telno'];
-            $params['weixinimg'] = $data['weixinimg'];
-            $params['adimgs'] = $data['adimgs'];
+            $params['weixinimg1'] = $data['weixinimg1'];
+            $params['weixinimg2'] = $data['weixinimg2'];
+            $params['adimg1'] = $data['adimg1'];
+            $params['adimg2'] = $data['adimg2'];
+            $params['adimg3'] = $data['adimg3'];
+            $params['adimg4'] = $data['adimg4'];
             try {
                 $model = new \app\admin\model\Config();
                 $returnData = $model->configUpdate($params);

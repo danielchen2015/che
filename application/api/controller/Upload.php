@@ -16,17 +16,23 @@ class Upload extends Base
     /**
      * @SWG\Post(
      *     path="/api/Upload/uploadimg",
-     *     tags={"4-车辆管理部分接口"},
+     *     tags={"4-上传图片接口"},
      *     operationId="uploadimg",
      *     summary="4.1-添加图片",
      *     description="添加图片(为小程序使用)。",
      *     consumes={"application/json"},
-     *     @SWG\Property(example={"img64" : "base64位图片"}),
+     *     @SWG\Parameter(
+     *         name="body",
+     *         in="body",
+     *         description="Json格式",
+     *         required=true,
+     *         type="string",
+     *         @SWG\Property(example={"img64":"base64位图片"})
+     *      ),
      *     produces={"application/json"},
      *     @SWG\Response(
-     *     {
      *         response="200",
-     *         description="/upload/20190508213746_.jpeg",
+     *         description="添加成功",
      *         @SWG\Schema(ref="#/definitions/ApiResponse")
      *     ),
      *     security={{"petstore_auth":{"write:uploadimg", "read:uploadimg"}}}
@@ -42,7 +48,8 @@ class Upload extends Base
         if (preg_match('/^(data:\s*image\/(\w+);base64,)/', $base64_img, $result)) {
             $type = $result[2];
             if (in_array($type, array('pjpeg', 'jpeg', 'jpg', 'gif', 'bmp', 'png'))) {
-                $new_file = $up_dir . $this->getRandomString(10) . '.' . $type;
+                $model = new \app\api\model\Upload();
+                $new_file = $up_dir . $model->getRandomString(10) . '.' . $type;
                 if (file_put_contents($new_file, base64_decode(str_replace($result[1], '', $base64_img)))) {
                     //print_r($new_file);
                     $img_path = str_replace('../../..', '', $new_file);
@@ -66,19 +73,6 @@ class Upload extends Base
         //echo $imagebase64;
         //exit;
     }
-   /*
-    * 生成随机数
-    * */
-    function getRandomString($len, $chars=null)
-    {
-        if (is_null($chars)){
-            $chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-        }
-        mt_srand(10000000*(double)microtime());
-        for ($i = 0, $str = '', $lc = strlen($chars)-1; $i < $len; $i++){
-            $str .= $chars[mt_rand(0, $lc)];
-        }
-        return $str;
-    }
+
 
 }
