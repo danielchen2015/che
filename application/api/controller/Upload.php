@@ -21,9 +21,7 @@ class Upload extends Base
      *     summary="4.1-添加图片",
      *     description="添加图片(为小程序使用)。",
      *     consumes={"application/json"},
-     *     @SWG\Property(example={
-     *     "img64" : "base64位图片"
-     *      ),
+     *     @SWG\Property(example={"img64" : "base64位图片"}),
      *     produces={"application/json"},
      *     @SWG\Response(
      *     {

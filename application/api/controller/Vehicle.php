@@ -53,7 +53,7 @@ class Vehicle extends Base
      *     "dial_index": "拨号指数"
      *     "score": "会员积分"
      *     "opr_user": "发布人员编号"
-     *      ),
+     *      }),
      *     produces={"application/json"},
      *     @SWG\Response(
      *         response="200",

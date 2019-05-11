@@ -4,7 +4,7 @@
  * @SWG\Swagger(
  *     schemes={"http"},
  *     host="che.xingyizxmr.com:8080",
- *     basePath="/api",
+ *     basePath="",
  *     @SWG\Info(
  *         version="1.0",
  *         title="全国兄弟情精选车 API接口",
