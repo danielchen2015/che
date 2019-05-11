@@ -3,7 +3,7 @@
 /**
  * @SWG\Swagger(
  *     schemes={"http"},
- *     host="che.xingyizxmr.com",
+ *     host="che.xingyizxmr.com:8080",
  *     basePath="/api",
  *     @SWG\Info(
  *         version="1.0",

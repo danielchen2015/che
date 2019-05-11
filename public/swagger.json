@@ -1,0 +1,184 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "title": "\u5168\u56fd\u5144\u5f1f\u60c5\u7cbe\u9009\u8f66 API\u63a5\u53e3",
+        "description": "\u5168\u56fd\u5144\u5f1f\u60c5\u7cbe\u9009\u8f66API\u63a5\u53e3\uff0c\u7528\u4e8e\u524d\u7aef\u5c0f\u7a0b\u5e8f\u8c03\u7528\u3002",
+        "termsOfService": "#",
+        "contact": {
+            "email": "daniel_c_tao@qq.com"
+        },
+        "license": {
+            "name": "PHP 7.2 & ThinkPHP 5.1.27",
+            "url": "#"
+        },
+        "version": "1.0"
+    },
+    "host": "che.xingyizxmr.com:8080",
+    "basePath": "/api",
+    "schemes": [
+        "http"
+    ],
+    "paths": {
+        "/api/Config/info": {
+            "get": {
+                "tags": [
+                    "2-\u7cfb\u7edf\u914d\u7f6e\u7ba1\u7406\u90e8\u5206\u63a5\u53e3"
+                ],
+                "summary": "2.1-\u83b7\u53d6\u7cfb\u7edf\u914d\u7f6e\u4fe1\u606f",
+                "description": "\u83b7\u53d6\u7cfb\u7edf\u914d\u7f6e\u4fe1\u606f(\u4e3a\u5c0f\u7a0b\u5e8f\u4f7f\u7528)\u3002\u83b7\u53d6\u7cfb\u7edf\u5e7f\u544a\u4f4d\uff0c\u5fae\u4fe1\u4e8c\u7ef4\u7801\uff0c\u624b\u673a\u53f7\uff0c\u8054\u7cfb\u65b9\u5f0f\u3002",
+                "operationId": "info",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "\u6dfb\u52a0\u6210\u529f",
+                        "schema": {
+                            "$ref": "#/definitions/ApiResponse"
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "petstore_auth": [
+                            "write:info",
+                            "read:info"
+                        ]
+                    }
+                ]
+            }
+        },
+        "/api/User/info?openid={openid}&mobileno={mobileno}": {
+            "get": {
+                "tags": [
+                    "1-\u7528\u6237\u7ba1\u7406\u90e8\u5206\u63a5\u53e3"
+                ],
+                "summary": "1.2-\u83b7\u53d6\u7528\u6237\u4fe1\u606f",
+                "description": "\u83b7\u53d6\u7528\u6237\u4fe1\u606f(\u4e3a\u5c0f\u7a0b\u5e8f\u4f7f\u7528)\u3002openid\u548cmobileno\u4e24\u8005\u4f20\u4e00\u4e2a\u5373\u53ef\u3002",
+                "operationId": "info",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "openid",
+                        "in": "query",
+                        "description": "openid",
+                        "required": false,
+                        "format": "string"
+                    },
+                    {
+                        "name": "mobileno",
+                        "in": "query",
+                        "description": "\u624b\u673a\u53f7",
+                        "required": false,
+                        "format": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "\u6dfb\u52a0\u6210\u529f",
+                        "schema": {
+                            "$ref": "#/definitions/ApiResponse"
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "petstore_auth": [
+                            "write:info",
+                            "read:info"
+                        ]
+                    }
+                ]
+            }
+        },
+        "/api/vehicle/getvehicleinfo": {
+            "post": {
+                "tags": [
+                    "3-\u8f66\u8f86\u7ba1\u7406\u90e8\u5206\u63a5\u53e3\uff0c\u53ef\u53ea\u4f20\u4e00\u4e2a\u53c2\u6570\uff0c\u83b7\u53d6\u6211\u53d1\u5e03\u7684\u8f66\u8f86\u4e5f\u662f\u5728\u8fd9\u91cc"
+                ],
+                "summary": "3.2-\u83b7\u53d6\u8f66\u8f86\u4fe1\u606f",
+                "description": "\u83b7\u53d6\u8f66\u8f86\u4fe1\u606f(\u4e3a\u5c0f\u7a0b\u5e8f\u4f7f\u7528)\u3002",
+                "operationId": "getvehicleinfo",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/ApiResponse"
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "petstore_auth": [
+                            "write:getvehicleinfo",
+                            "read:getvehicleinfo"
+                        ]
+                    }
+                ]
+            }
+        }
+    },
+    "definitions": {
+        "ApiResponse": {
+            "description": "\u901a\u7528\u8fd4\u56de\u7ed3\u679c\u5bf9\u8c61",
+            "properties": {
+                "resultId": {
+                    "description": "",
+                    "type": "string",
+                    "example": "G00000010"
+                },
+                "resultCode": {
+                    "description": "",
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    },
+                    "enum": [
+                        "000000",
+                        "999990",
+                        "999999",
+                        "600100",
+                        "650100",
+                        "650200",
+                        "100001",
+                        "100002"
+                    ],
+                    "example": "000000"
+                },
+                "resultMsg": {
+                    "description": "",
+                    "type": "string",
+                    "example": "\u7ed3\u679c\u4fe1\u606f"
+                },
+                "pageReturn": {
+                    "description": "",
+                    "type": "object",
+                    "example": {
+                        "pageNumber": "1",
+                        "pageSize": "1",
+                        "totalRecords": "16"
+                    }
+                }
+            },
+            "type": "object"
+        }
+    },
+    "externalDocs": {
+        "description": "\u8be6\u7ec6\u67e5\u770b\u6587\u6863",
+        "url": "#"
+    }
+}
