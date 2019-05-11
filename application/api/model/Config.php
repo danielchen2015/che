@@ -20,7 +20,7 @@ class Config extends Base
     public function configInfo()
     {
         $returnData = Db::table('che_config')
-            ->field(['title', 'company', 'mobile', 'telno', 'weixinimg', 'adimgs'])
+            ->field(['title', 'company', 'mobile', 'telno', 'weixinimg1', 'weixinimg2', 'adimg1', 'adimg2', 'adimg3', 'adimg4'])
             ->limit(1)->select();
 
         if (!empty($returnData)) {
