@@ -7,6 +7,7 @@
  */
 
 namespace app\api\controller;
+
 use think\Request;
 use think\Response;
 
@@ -19,7 +20,7 @@ class Upload extends Base
      *     tags={"4-上传图片接口"},
      *     operationId="uploadimg",
      *     summary="4.1-添加图片",
-     *     description="添加图片(为小程序使用)。",
+     *     description="添加图片(后台使用)。",
      *     consumes={"application/json"},
      *     @SWG\Parameter(
      *         name="body",
@@ -41,7 +42,7 @@ class Upload extends Base
     public function uploadimg(Request $request)
     {
         $base64_img = $request->post("img64");
-        $up_dir = './upload/'.date('Ymd').'/';//存放在当前目录的upload文件夹下
+        $up_dir = './upload/' . date('Ymd') . '/';//存放在当前目录的upload文件夹下
         if (!file_exists($up_dir)) {
             mkdir($up_dir, 0777);
         }
@@ -74,5 +75,55 @@ class Upload extends Base
         //exit;
     }
 
+    /**
+     * @SWG\Post(
+     *     path="/api/Upload/upload",
+     *     tags={"4-上传图片接口"},
+     *     operationId="upload",
+     *     summary="4.2-添加图片",
+     *     description="添加图片(为小程序使用)。",
+     *     consumes={"application/json"},
+     *     @SWG\Parameter(
+     *         name="body",
+     *         in="body",
+     *         description="Json格式",
+     *         required=true,
+     *         type="string",
+     *         @SWG\Property(example={"file":"小程序图片上传信息"})
+     *      ),
+     *     produces={"application/json"},
+     *     @SWG\Response(
+     *         response="200",
+     *         description="添加成功",
+     *         @SWG\Schema(ref="#/definitions/ApiResponse")
+     *     ),
+     *     security={{"petstore_auth":{"write:upload", "read:upload"}}}
+     * )
+     */
+    public function upload(Request $request)
+    {
+        $file = $request->file('file');
+
+        $up_dir = './upload/' . date('Ymd') . '/';//存放在当前目录的upload文件夹下
+        if (!file_exists($up_dir)) {
+            mkdir($up_dir, 0777);
+        }
+
+        $info = $file->move($up_dir);
+
+        if ($info) {
+            $saveName = str_replace("\\", "/", $info->getSaveName());
+            $img = '/upload/' . date('Ymd') . '/' . $saveName;
+            $imgUrl = 'http://che.xingyizxmr.com:8080/upload/' . date('Ymd') . '/' . $saveName;
+            $resData = array();
+            $resData['imgUrl'] = $imgUrl;
+            $resData['imgName'] = $img;
+
+            return Response::create(['resultCode' => 200, 'resultMsg' => $resData], 'json', 200);
+        } else {
+            return Response::create(['resultCode' => 4000, 'resultMsg' => '上传文件错误'], 'json', 400);
+        }
+
+    }
 
 }
