@@ -29,6 +29,7 @@ class Vehicle extends Base
      *     description="添加车辆(为小程序使用)。",
      *     consumes={"application/json"},
      *     @SWG\Property(example={
+     *     "openid": "openid"
      *     "price" : "价格",
      *     "models": "车型",
      *     "boarddateyear": "上牌日期年份"
@@ -72,6 +73,8 @@ class Vehicle extends Base
         }
         try {
             $params = array();
+            $openid = $inputData->openid;
+
             $params['price'] = $inputData->price;
             $params['models'] = $inputData->models;
             $params['boarddateyear'] = $inputData->boarddateyear;
@@ -90,24 +93,86 @@ class Vehicle extends Base
             $params['loc_city'] = $inputData->loc_city;
             $params['loc_area'] = $inputData->loc_area;
             $params['transfer_times'] = $inputData->transfer_times;
-            $params['fixprice'] = $inputData->fixprice;
-            $params['status'] = $inputData->status;
-            $params['popularity_index'] = $inputData->popularity_index;
-            $params['dial_index'] = $inputData->dial_index;
-            $params['score'] = $inputData->score;
+            $params['fixprice'] = 0;
+            $params['status'] = 1;
+            $params['popularity_index'] = 0;
+            $params['dial_index'] = 0;
+            $params['score'] = 0;
             $params['opr_datetime'] = time();
-            $params['opr_user'] = $inputData->opr_user;
+            //$params['opr_user'] = $inputData->opr_user;
             /*add code =0 不然没法插入数据*/
             $params['code'] = 0;
 
             $model = new \app\api\model\Vehicle();
+            $userinfo = $model->getuserid($openid);
+           // print_r($userinfo);
+            //exit;
+            if(empty($userinfo)){
+                return Response::create(['resultCode' => 202, 'resultMsg' => '没有该用户！'], 'json', 202);
+            }
+            $params['opr_user']=$userinfo['userid'];
             //print_r($params);
             //exit;
             $returnData = $model->vehicleAdd($params);
             if ($returnData == 1) {
                 return Response::create(['resultCode' => 200, 'resultMsg' => '添加车辆成功！'], 'json', 200);
             } else {
-                return Response::create(['resultCode' => 202, 'resultMsg' => '添加车辆失败！'], 'json', 200);
+                return Response::create(['resultCode' => 202, 'resultMsg' => '添加车辆失败！'], 'json', 202);
+            }
+        } catch (Exception $e) {
+            return Response::create(['resultCode' => 4000, 'resultMsg' => $e->getMessage()], 'json', 400);
+        }
+    }
+    /**
+     * @SWG\get(
+     *     path="/api/vehicle/getvehicleinfo",
+     *     tags={"3-车辆管理部分接口，可只传一个参数，获取我发布的车辆也是在这里"},
+     *     operationId="getvehicleinfo",
+     *     summary="3.2-获取车辆信息",
+     *     description="获取车辆信息(为小程序使用)。",
+     *     consumes={"application/json"},
+     *     @SWG\Property(example={
+     *     "id" : "车辆id",
+     *     "openid" : "openid",
+     *      }),
+     *     produces={"application/json"},
+     *     @SWG\Response(
+     *         response="200",
+     *         description="",
+     *         @SWG\Schema(ref="#/definitions/ApiResponse")
+     *     ),
+     *     security={{"petstore_auth":{"write:getvehicleinfo", "read:getvehicleinfo"}}}
+     * )
+     */
+    public function getonevehicleinfo(Request $request)
+    {
+        $openid = $request->get("openid");
+        $id = $request->get("id");
+
+        if (empty($openid)||empty($id)) {
+            return Response::create(['resultCode' => 4000, 'resultMsg' => '请求参数错误！'], 'json', 400);
+        }
+        try {
+            $params = array();
+
+            $model = new \app\api\model\Vehicle();
+            $userinfo = $model->getuserid($openid);
+
+            if(empty($userinfo)){
+                return Response::create(['resultCode' => 202, 'resultMsg' => '没有该用户！'], 'json', 202);
+            }
+            $params["id"] = $id;
+            $returnData = $model->vehicleinfo($params);
+            if($returnData['opr_user']==$userinfo['userid']){
+
+            }
+            print_r($returnData);
+            exit;
+           // if($returnData[''])
+            if (!empty($returnData)) {
+                return Response::create(['resultCode' => 200, 'resultMsg' => $returnData], 'json', 200);
+            } else {
+                return Response::create(['resultCode' => 202, 'resultMsg' => '获取车辆失败！'], 'json', 200);
             }
         } catch (Exception $e) {
             return Response::create(['resultCode' => 4000, 'resultMsg' => $e->getMessage()], 'json', 400);
@@ -123,7 +188,10 @@ class Vehicle extends Base
      *     consumes={"application/json"},
      *     @SWG\Property(example={
      *     "id" : "车辆id",
-     *     "opr_user" : "发布人员编号"
+     *     "openid" : "openid",
+     *     "pricefrom" : "0",
+     *     "priceto" : "0",
+     *     "priceto" : "0",
      *      }),
      *     produces={"application/json"},
      *     @SWG\Response(
