@@ -39,6 +39,22 @@ class Vehicle extends Base
 
     }
     /**
+     * @param $openid
+     * 获取配置文件
+     */
+    public function getconfig()
+    {
+        //print_r($data);
+        //exit;
+        $returnData = Db::table('che_config')->limit(1)->find();
+        if (!empty($returnData)) {
+            return $returnData;
+        } else {
+            return null;
+        }
+
+    }
+    /**
  * @param $data
  * 车辆信息
  */
@@ -62,7 +78,7 @@ class Vehicle extends Base
          }*/
         $returnData = Db::table('che_vehicle')
             ->where($data)
-            ->find();
+            ->select();
         //print_r( $returnData);
 
         //$returnData[0][]=
