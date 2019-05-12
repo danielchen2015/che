@@ -153,7 +153,7 @@
                     "4-\u4e0a\u4f20\u56fe\u7247\u63a5\u53e3"
                 ],
                 "summary": "4.1-\u6dfb\u52a0\u56fe\u7247",
-                "description": "\u6dfb\u52a0\u56fe\u7247(\u4e3a\u5c0f\u7a0b\u5e8f\u4f7f\u7528)\u3002",
+                "description": "\u6dfb\u52a0\u56fe\u7247(\u540e\u53f0\u4f7f\u7528)\u3002",
                 "operationId": "uploadimg",
                 "consumes": [
                     "application/json"
@@ -188,6 +188,52 @@
                         "petstore_auth": [
                             "write:uploadimg",
                             "read:uploadimg"
+                        ]
+                    }
+                ]
+            }
+        },
+        "/api/Upload/upload": {
+            "post": {
+                "tags": [
+                    "4-\u4e0a\u4f20\u56fe\u7247\u63a5\u53e3"
+                ],
+                "summary": "4.2-\u6dfb\u52a0\u56fe\u7247",
+                "description": "\u6dfb\u52a0\u56fe\u7247(\u4e3a\u5c0f\u7a0b\u5e8f\u4f7f\u7528)\u3002",
+                "operationId": "upload",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "body",
+                        "in": "body",
+                        "description": "Json\u683c\u5f0f",
+                        "required": true,
+                        "schema": {
+                            "example": {
+                                "file": "\u5c0f\u7a0b\u5e8f\u56fe\u7247\u4e0a\u4f20\u4fe1\u606f"
+                            }
+                        },
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "\u6dfb\u52a0\u6210\u529f",
+                        "schema": {
+                            "$ref": "#/definitions/ApiResponse"
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "petstore_auth": [
+                            "write:upload",
+                            "read:upload"
                         ]
                     }
                 ]
