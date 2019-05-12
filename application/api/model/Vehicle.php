@@ -53,4 +53,18 @@ class Vehicle extends Base
         }
 
     }
+    /**
+     * @param $data
+     * 更新车辆状态
+     */
+    public function vehicleupdate($id,$status)
+    {
+        //print_r($data);
+        //exit;
+        return Db::table('che_vehicle')
+            ->where('id','=',$id)
+            ->update(['status'=>$status]);
+
+
+    }
 }

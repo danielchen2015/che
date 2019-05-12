@@ -22,8 +22,8 @@
     <link href="__CSS__/style-responsive.css" rel="stylesheet" />
     <link href="__ASSETS__/dropzone/css/dropzone.css" rel="stylesheet"/>
     <link rel="stylesheet" type="text/css" href="__ASSETS__/bootstrap-fileupload/bootstrap-fileupload.css" />
-
-
+    <link href="__ASSETS__/fancybox/source/jquery.fancybox.css" rel="stylesheet" />
+    <link rel="stylesheet" type="text/css" href="__CSS__/gallery.css" />
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 tooltipss and media queries -->
     <!--[if lt IE 9]>
     <script src="__JS__/html5shiv.js"></script>
@@ -63,36 +63,89 @@
                                         </div>
                                     </div>
                                     <div class="form-group ">
-                                        <label for="boarddateyear" class="control-label col-lg-2">上牌日期年份</label>
-                                        <div class="col-lg-10">
-                                            <input class="form-control " id="boarddateyear" name="data[boarddateyear]" value="<?=$vehicleinfo['boarddateyear']?>" type="text" />
+                                        <div class="form-inline">
+                                            <!--                                        <label for="boarddateyear" class="control-label col-lg-2">上牌日期年份</label>-->
+                                            <!--                                        <div class="col-lg-10">-->
+                                            <!--                                            <input class="form-control " id="boarddateyear" name="data[boarddateyear]" value="<?=$vehicleinfo['boarddateyear']?>" type="text" />-->
+                                            <!--                                        </div>-->
+                                            <label for="boarddateyear" class="control-label col-lg-2">上牌日期</label>
+                                            <div class="col-lg-6">
+                                                <div class="row">
+                                                    <div class="col-lg-2">
+
+                                                        <select id="boarddateyear" name="data[boarddateyear]" class="form-control m-bot15">
+                                                            <?php foreach($year as $value):?>
+                                                            <option value="<?=$value;?>" <?php if($value==$vehicleinfo[boarddateyear]) echo "selected";?>><?=$value;?>年</option>
+                                                            <?php endforeach;?>
+                                                        </select>
+
+
+                                                    </div>
+                                                    <div class="col-lg-2">
+                                                        <select id="boarddatemonth" name="data[boarddatemonth]" class="form-control m-bot15">
+                                                            <?php foreach($month as $value):?>
+                                                            <option value="<?=$value;?>" <?php if($value==$vehicleinfo[boarddatemonth]) echo "selected";?>><?=$value;?>月</option>
+                                                            <?php endforeach;?>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="form-group ">
-                                        <label for="boarddatemonth" class="control-label col-lg-2">上牌日期月份</label>
-                                        <div class="col-lg-10">
-                                            <input class="form-control " id="boarddatemonth" name="data[boarddatemonth]" value="<?=$vehicleinfo['boarddatemonth']?>" type="text" />
+                                        <div class="form-inline">
+                                            <!--                                        <label for="boarddateyear" class="control-label col-lg-2">上牌日期年份</label>-->
+                                            <!--                                        <div class="col-lg-10">-->
+                                            <!--                                            <input class="form-control " id="boarddateyear" name="data[boarddateyear]" value="<?=$vehicleinfo['boarddateyear']?>" type="text" />-->
+                                            <!--                                        </div>-->
+                                            <label for="proddateyear" class="control-label col-lg-2">出厂日期</label>
+                                            <div class="col-lg-6">
+                                                <div class="row">
+                                                    <div class="col-lg-2">
+                                                        <select id="proddateyear" name="data[proddateyear]" class="form-control m-bot15">
+                                                            <?php foreach($year as $value):?>
+                                                            <option value="<?=$value;?>" <?php if($value==$vehicleinfo[proddateyear]) echo "selected";?>><?=$value;?>年</option>
+                                                            <?php endforeach;?>
+                                                        </select>
+
+
+                                                    </div>
+                                                    <div class="col-lg-2">
+                                                        <select name="data[proddatemonth]" class="form-control m-bot15">
+                                                            <?php foreach($month as $value):?>
+                                                            <option value="<?=$value;?>" <?php if($value==$vehicleinfo[proddatemonth]) echo "selected";?>><?=$value;?>月</option>
+                                                            <?php endforeach;?>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
+                                    <!--                                    <div class="form-group ">-->
+                                    <!--                                        <label for="boarddatemonth" class="control-label col-lg-2">上牌日期月份</label>-->
+                                    <!--                                        <div class="col-lg-10">-->
+                                    <!--                                            <input class="form-control " id="boarddatemonth" name="data[boarddatemonth]" value="<?=$vehicleinfo['boarddatemonth']?>" type="text" />-->
+                                    <!--                                        </div>-->
+                                    <!--                                    </div>-->
+                                    <!--                                    <div class="form-group ">-->
+                                    <!--                                        <label for="proddateyear" class="control-label col-lg-2">出厂日期年份</label>-->
+                                    <!--                                        <div class="col-lg-10">-->
+                                    <!--                                            <input class="form-control " id="proddateyear" name="data[proddateyear]" value="<?=$vehicleinfo['proddateyear']?>" type="text" />-->
+                                    <!--                                        </div>-->
+                                    <!--                                    </div>-->
+                                    <!--                                    <div class="form-group ">-->
+                                    <!--                                        <label for="proddatemonth" class="control-label col-lg-2">出厂日期月份</label>-->
+                                    <!--                                        <div class="col-lg-10">-->
+                                    <!--                                            <input class="form-control " id="proddatemonth" name="data[proddatemonth]" value="<?=$vehicleinfo['proddatemonth']?>" type="text" />-->
+                                    <!--                                        </div>-->
+                                    <!--                                    </div>-->
                                     <div class="form-group ">
-                                        <label for="proddateyear" class="control-label col-lg-2">出厂日期年份</label>
-                                        <div class="col-lg-10">
-                                            <input class="form-control " id="proddateyear" name="data[proddateyear]" value="<?=$vehicleinfo['proddateyear']?>" type="text" />
-                                        </div>
-                                    </div>
-                                    <div class="form-group ">
-                                        <label for="proddatemonth" class="control-label col-lg-2">出厂日期月份</label>
-                                        <div class="col-lg-10">
-                                            <input class="form-control " id="proddatemonth" name="data[proddatemonth]" value="<?=$vehicleinfo['proddatemonth']?>" type="text" />
-                                        </div>
-                                    </div>
-                                        <div class="form-group ">
                                         <label for="realmileage" class="control-label col-lg-2">真实里程</label>
                                         <div class="col-lg-10">
                                             <input class="form-control " id="realmileage" name="data[realmileage]" value="<?=$vehicleinfo['realmileage']?>" type="text" />
                                         </div>
                                     </div>
-                                        <div class="form-group ">
+                                    <div class="form-group ">
                                         <label for="condition" class="control-label col-lg-2">车况描述</label>
                                         <div class="col-lg-10">
                                             <input class="form-control " id="condition" name="data[condition]" value="<?=$vehicleinfo['condition']?>" type="text" />
@@ -126,22 +179,49 @@
                                     </div>
                                     <div class="form-group ">
                                         <label for="loc_province" class="control-label col-lg-2">车辆所在地省份</label>
-                                        <div class="col-lg-10">
-                                            <input class="form-control " id="loc_province" name="data[loc_province]" value="<?=$vehicleinfo['loc_province']?>" type="text" />
+                                        <!--                                        <div class="col-lg-10">-->
+                                        <!--                                            <input class="form-control " id="loc_province" name="data[loc_province]" value="<?=$vehicleinfo['loc_province']?>" type="text" />-->
+                                        <!--                                        </div>-->
+                                        <div class="col-lg-6">
+                                            <div class="row">
+                                                <div class="col-lg-2">
+                                                    <select id="loc_province" name="data[loc_province]" onchange="showprovince(this)" class="form-control m-bot15">
+                                                        <?php foreach($provinceinfo as $value):?>
+                                                        <option value="<?=$value['province'];?>" datacase="<?=$value['provinceid'];?>" <?php if($value['province']==$vehicleinfo[loc_province]) echo "selected";?>><?=$value['province'];?></option>
+                                                        <?php endforeach;?>
+                                                    </select>
+
+
+                                                </div>
+                                                <div class="col-lg-2">
+                                                    <select name="data[loc_city]" class="form-control m-bot15"  onchange="showcity(this)">
+                                                        <?php foreach($cityinfo as $value):?>
+                                                        <option value="<?=$value['city'];?>" datacase="<?=$value['cityid'];?>" <?php if($value['city']==$vehicleinfo[loc_city]) echo "selected";?>><?=$value['city'];?></option>
+                                                        <?php endforeach;?>
+                                                    </select>
+                                                </div>
+                                                <div class="col-lg-2">
+                                                    <select name="data[loc_area]" class="form-control m-bot15" onchange="showarea(this)">
+                                                        <?php foreach($areainfo as $value):?>
+                                                        <option value="<?=$value['area'];?>"  datacase="<?=$value['areaid'];?>" <?php if($value['area']==$vehicleinfo[loc_area]) echo "selected";?>><?=$value['area'];?></option>
+                                                        <?php endforeach;?>
+                                                    </select>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
-                                    <div class="form-group ">
-                                        <label for="loc_city" class="control-label col-lg-2">车辆所在地城市</label>
-                                        <div class="col-lg-10">
-                                            <input class="form-control " id="loc_city" name="data[loc_city]" value="<?=$vehicleinfo['loc_city']?>" type="text" />
-                                        </div>
-                                    </div>
-                                    <div class="form-group ">
-                                        <label for="loc_area" class="control-label col-lg-2">车辆所在地区域</label>
-                                        <div class="col-lg-10">
-                                            <input class="form-control " id="loc_area" name="data[loc_area]" value="<?=$vehicleinfo['loc_area']?>" type="text" />
-                                        </div>
-                                    </div>
+                                    <!--                                    <div class="form-group ">-->
+                                    <!--                                        <label for="loc_city" class="control-label col-lg-2">车辆所在地城市</label>-->
+                                    <!--                                        <div class="col-lg-10">-->
+                                    <!--                                            <input class="form-control " id="loc_city" name="data[loc_city]" value="<?=$vehicleinfo['loc_city']?>" type="text" />-->
+                                    <!--                                        </div>-->
+                                    <!--                                    </div>-->
+                                    <!--                                    <div class="form-group ">-->
+                                    <!--                                        <label for="loc_area" class="control-label col-lg-2">车辆所在地区域</label>-->
+                                    <!--                                        <div class="col-lg-10">-->
+                                    <!--                                            <input class="form-control " id="loc_area" name="data[loc_area]" value="<?=$vehicleinfo['loc_area']?>" type="text" />-->
+                                    <!--                                        </div>-->
+                                    <!--                                    </div>-->
 
                                     <div class="form-group ">
                                         <label for="transfer_times" class="control-label col-lg-2">过户次数</label>
@@ -157,8 +237,15 @@
                                     </div>
                                     <div class="form-group ">
                                         <label for="status" class="control-label col-lg-2">状态</label>
-                                        <div class="col-lg-10">
-                                            <input class="form-control " id="status" name="data[status]" value="<?=$vehicleinfo['status']?>" type="text" />
+                                        <!--                                        <div class="col-lg-10">-->
+                                        <!--                                            <input class="form-control " id="status" name="data[status]" value="<?=$vehicleinfo['status']?>" type="text" />-->
+                                        <!--                                        </div>-->
+                                        <div class="col-lg-2">
+                                            <select name="data[status]" id="status" class="form-control m-bot15"">
+                                            <?php foreach($vestatus as $value):?>
+                                            <option value="<?=$value['id'];?>" <?php if($value['id']==$vehicleinfo[status]) echo "selected";?>><?=$value['name'];?></option>
+                                            <?php endforeach;?>
+                                            </select>
                                         </div>
                                     </div>
                                     <div class="form-group ">
@@ -185,8 +272,8 @@
                                             <input class="form-control " id="opr_user" name="data[score]" value="<?=$vehicleinfo['opr_user']?>" type="text" />
                                         </div>
                                     </div>
-<!--                                    /*     "vehicleimgs": "车辆照片json格式"-->
-<!--                                    *     "weixinimg": "微信二维码地址"-->
+                                    <!--                                    /*     "vehicleimgs": "车辆照片json格式"-->
+                                    <!--                                    *     "weixinimg": "微信二维码地址"-->
                                     <div class="form-group last">
                                         <label class="control-label col-md-2">微信头像</label>
                                         <div class="col-md-9">
@@ -195,7 +282,7 @@
                                                     <?php if(empty($vehicleinfo['weixinimg'])){
                                                       echo '<img src="/upload/noimage.png" alt="">';
                                                     }else{
-                                                      echo '<img src="'.$vehicleinfo['weixinimg'].'" alt="">';
+                                                    echo '<img src="'.$vehicleinfo['weixinimg'].'" alt="">';
                                                     }
                                                     ?>
                                                 </div>
@@ -214,19 +301,36 @@
                                     <!-- page start-->
                                     <section class="panel">
                                         <header class="panel-heading">
-                                            Dropzone File Upload
+                                            车辆图片
                                         </header>
                                         <div class="panel-body">
-                                            <div action="__ASSETS__/dropzone/upload.php" class="dropzone" id="my-awesome-dropzone"></div>
+                                            <ul class="grid cs-style-3">
+                                                <?php foreach($vehicleinfo['vehicleimgs'] as $key=>$value){
+                                                echo '<li>
+                                                <figure>
+                                                    <img src="'.$value.'" alt="img04">
+                                                    <figcaption>
+                                                        <h3></h3>
+                                                        <span> </span>
+                                                        <a class="fancybox" rel="group" href="'.$value.'">查看大图</a>
+                                                    </figcaption>
+                                                </figure>
+                                            </li>';
+                                                }
+                                                ?>
+                                            </ul>
+
                                         </div>
-                                    </section>
-                                    <!-- page end-->
-                                    <div class="form-group">
-                                        <div class="col-lg-offset-2 col-lg-10">
-                                            <button class="btn btn-danger" type="submit">Save</button>
-                                            <button class="btn btn-default" type="button">Cancel</button>
+                                        <!-- page end-->
+                                        <div class="form-group">
+                                            <div class="col-lg-offset-2 col-lg-10">
+                                                <input type="hidden" name="id" value="<?=$vehicleinfo['id']?>">
+                                                <button class="btn btn-danger" type="submit">保存</button>
+                                                <a onclick="examone(2,<?=$vehicleinfo['id']?>)" class="btn btn-success">审核通过</a>
+                                                <a onclick="examone(3,<?=$vehicleinfo['id']?>)" class="btn btn-info">审核不通过</a>
+                                                <a class="btn btn-default" href="javascript:history.go(-1)" type="button">返回</a>
+                                            </div>
                                         </div>
-                                    </div>
 
                                 </form>
                             </div>
@@ -245,6 +349,11 @@
 <script src="__JS__/jquery.js"></script>
 <script src="__JS__/bootstrap.min.js"></script>
 <script class="include" type="text/javascript" src="__JS__/jquery.dcjqaccordion.2.7.js"></script>
+<script src="__ASSETS__/fancybox/source/jquery.fancybox.js"></script>
+<script src="__JS__/modernizr.custom.js"></script>
+<script src="__JS__/toucheffects.js"></script>
+
+
 <script src="__JS__/jquery.scrollTo.min.js"></script>
 <script src="__JS__/jquery.nicescroll.js" type="text/javascript"></script>
 <script type="text/javascript" src="__JS__/jquery.validate.min.js"></script>
@@ -262,4 +371,76 @@
 <script type="text/javascript" src="__ASSETS__/bootstrap-fileupload/bootstrap-fileupload.js"></script>
 
 </body>
+<script type="text/javascript">
+    $(function() {
+        //    fancybox
+        jQuery(".fancybox").fancybox();
+    });
+    function  showprovince(obj) {
+        var provinceid=$(obj).find("option:selected").attr("datacase");
+        $.ajax( {
+            url:'/api/areas/getcity?proviceid='+provinceid,// 跳转到 action
+            type:'get',
+            cache:false,
+            dataType:'json',
+            success:function(data) {
+                // var data=JSON.parse(data);
+                console.log(data);
+                var result=  data.resultMsg;
+                var htmllist = "";
+                for(var i=0;i<result.length;i++){
+                    htmllist += "<option value='"+result[i].city+"' datacase='"+result[i].cityid+"'>"+result[i].city+"</option>";
+                }
+                console.log(htmllist);
+                $("select[name='data[loc_city]'").empty();
+                $("select[name='data[loc_city]'").append(htmllist);
+                $.get("/api/areas/getarea?cityid="+result[0].cityid, function(data){
+                    var result= data.resultMsg;
+                    var htmllistc="";
+                    for(var i=0;i<result.length;i++){
+                        htmllistc += "<option value='"+result[i].area+"' datacase='"+result[i].areaid+"'>"+result[i].area+"</option>";
+                    }
+                    $("select[name='data[loc_area]'").empty();
+                    $("select[name='data[loc_area]'").append(htmllistc);
+                });
+
+            },
+            error : function() {
+                // view("异常！");
+                alert("异常！");
+            }
+        });
+        //console.log($(obj).find("option:selected").attr("datacase"));
+    }
+    function  showcity(obj) {
+        var cityid=$(obj).find("option:selected").attr("datacase");
+        //console.log($(obj).find("option:selected").attr("datacase"));
+        $.get("/api/areas/getarea?cityid="+cityid, function(data){
+            var result= data.resultMsg;
+            var htmllistc="";
+            for(var i=0;i<result.length;i++){
+                htmllistc += "<option value='"+result[i].area+"' datacase='"+result[i].areaid+"'>"+result[i].area+"</option>";
+            }
+            $("select[name='data[loc_area]'").empty();
+            $("select[name='data[loc_area]'").append(htmllistc);
+        });
+    }
+    function  showarea(obj) {
+        var cityid=$(obj).find("option:selected").attr("datacase");
+        //  console.log($(obj).find("option:selected").attr("datacase"));
+    }
+
+    function  examone(obj,id) {
+
+        $.get("/api/vehicle/updatestatus?id="+id+"&status="+obj, function(data){
+            if(data.resultCode==200){
+                location.href='vlist'
+            }
+        });
+
+    }
+
+</script>
+
+
 </html>

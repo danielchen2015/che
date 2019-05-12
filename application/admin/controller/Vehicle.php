@@ -37,12 +37,28 @@ class Vehicle extends Controller
             $model = new \app\admin\model\Vehicle();
             $id=$request->get("id");
             $returnData = $model->vehicleinfo($id);
+            $provinceinfo = $model->province();
+            $cityinfo = $model->city($returnData['loc_province']);
+            $areainfo = $model->area($returnData['loc_city']);
+
 
         } catch (Exception $ex) {
             return $ex->getMessage();
         }
-        print_r($returnData);
+        $returnData['vehicleimgs']=json_decode($returnData['vehicleimgs'],true);
+        //print_r($returnData);
+        $this->assign('year', range(2000,2020,1));
+        $this->assign('month', range(1,12,1));
+        $temparr[]=["id"=>1,"name"=>"待审核"];
+        $temparr[]=["id"=>2,"name"=>"审核通过"];
+        $temparr[]=["id"=>3,"name"=>"审核不通过"];
+        $this->assign('vestatus',$temparr);
         $this->assign('vehicleinfo', $returnData);
+        $this->assign('provinceinfo', $provinceinfo);
+        $this->assign('cityinfo', $cityinfo);
+        $this->assign('areainfo', $areainfo);
+        //print_r($provinceinfo);
+        //exit;
         //print_r($returnData);
 
         return view("vehicleinfo");
@@ -50,30 +66,24 @@ class Vehicle extends Controller
 
     public function modifyvehile(Request $request){
         $data = $request->post();
-        print_r($data);
-       /* if ($request->isPost()) {
+        if ($request->isPost()) {
             //获取表单POST的值
             $params = array();
-            $params['username'] = $data['username'];
-            $params['password'] = md5($data['password']);
+            $id = $data['id'];
+            foreach ($data['data'] as $key => $value){
+                $params[$key] = $value;
+            }
+            //unset($params['id']);
+
+
             try {
-                $model = new \app\admin\model\User();
-                $returnData = $model->userLogin($params);
-                if (!empty($returnData)) {
-                    if ($returnData[0]['username'] == $data['username']) {
-                        session('userid', $returnData[0]['userid']);
-                        session('roleid', $returnData[0]['roleid']);
-                        session('username', $returnData[0]['username']);
-                        $this->redirect('admin/Index/index');
-                    } else {
-                        $this->error('用户名或密码错误！', 'admin/User/login');
-                    }
-                } else {
-                    $this->error('用户名或密码错误！', 'admin/User/login');
-                }
+                $model = new \app\admin\model\Vehicle();
+                $model->updatevehicleinfo($id,$params);
+                $this->redirect('admin/vehicle/vlist');
+
             } catch (Exception $ex) {
                 return $ex->getMessage();
             }
-        }*/
+        }
     }
 }

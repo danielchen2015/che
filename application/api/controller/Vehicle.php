@@ -28,38 +28,32 @@ class Vehicle extends Base
      *     summary="3.1-添加车辆",
      *     description="添加车辆(为小程序使用)。",
      *     consumes={"application/json"},
-     *     @SWG\Parameter(
-     *         name="body",
-     *         in="body",
-     *         description="Json格式",
-     *         required=true,
-     *         type="string",
-     *         @SWG\Property(example={
+     *     @SWG\Property(example={
      *     "price" : "价格",
      *     "models": "车型",
-     *     "boarddateyear": "上牌日期年份",
-     *     "boarddatemonth": "上牌日期月份",
-     *     "proddateyear": "出厂日期年份",
-     *     "proddatemonth": "出厂日期月份",
-     *     "realmileage": "真实里程",
-     *     "condition": "车况描述",
-     *     "contacttel": "联系电话",
-     *     "vehicleimgs": "车辆照片json格式",
-     *     "weixinimg": "微信二维码地址",
-     *     "guideprice": "新车指导价",
-     *     "displacement": "汽车排量",
-     *     "configuration": "车辆配置",
-     *     "loc_province": "车辆所在地省份",
-     *     "loc_city": "车辆所在地城市",
-     *     "loc_area": "车辆所在地区域",
-     *     "transfer_times": "过户次数",
-     *     "fixprice": "一口价",
-     *     "status": "状态",
-     *     "popularity_index": "人气指数",
-     *     "dial_index": "拨号指数",
-     *     "score": "会员积分",
-     *     "opr_user": "发布人员编号"})
-     *     ),
+     *     "boarddateyear": "上牌日期年份"
+     *     "boarddatemonth": "上牌日期月份"*
+     *     "proddateyear": "出厂日期年份"
+     *     "proddatemonth": "出厂日期月份"
+     *     "realmileage": "真实里程"
+     *     "condition": "车况描述"
+     *     "contacttel": "联系电话"
+     *     "vehicleimgs": "车辆照片json格式 ["/upload/20190511/JjTfWAF0DD.png","/upload/20190511/JjTfWAF0DD.png","/upload/20190511/JjTfWAF0DD.png","/upload/20190511/JjTfWAF0DD.png","/upload/20190511/JjTfWAF0DD.png","/upload/20190511/JjTfWAF0DD.png","/upload/20190511/JjTfWAF0DD.png","/upload/20190511/JjTfWAF0DD.png","/upload/20190511/JjTfWAF0DD.png","/upload/20190511/JjTfWAF0DD.png","/upload/20190511/JjTfWAF0DD.png"]"
+     *     "weixinimg": "微信二维码地址"
+     *     "guideprice": "新车指导价"
+     *     "displacement": "汽车排量"
+     *     "configuration": "车辆配置"
+     *     "loc_province": "车辆所在地省份"
+     *     "loc_city": "车辆所在地城市"
+     *     "loc_area": "车辆所在地区域"
+     *     "transfer_times": "过户次数"
+     *     "fixprice": "一口价"
+     *     "status": "状态"
+     *     "popularity_index": "人气指数"
+     *     "dial_index": "拨号指数"
+     *     "score": "会员积分"
+     *     "opr_user": "发布人员编号"
+     *      }),
      *     produces={"application/json"},
      *     @SWG\Response(
      *         response="200",
@@ -122,23 +116,19 @@ class Vehicle extends Base
     /**
      * @SWG\Post(
      *     path="/api/vehicle/getvehicleinfo",
-     *     tags={"3-车辆管理部分接口"},
+     *     tags={"3-车辆管理部分接口，可只传一个参数，获取我发布的车辆也是在这里"},
      *     operationId="getvehicleinfo",
      *     summary="3.2-获取车辆信息",
-     *     description="获取车辆信息(为小程序使用)。可只传一个参数，获取我发布的车辆也是在这里",
+     *     description="获取车辆信息(为小程序使用)。",
      *     consumes={"application/json"},
-     *     @SWG\Parameter(
-     *         name="body",
-     *         in="body",
-     *         description="Json格式",
-     *         required=true,
-     *         type="string",
-     *         @SWG\Property(example={"id": "车辆id","opr_user": "发布人员编号"})
-     *      ),
+     *     @SWG\Property(example={
+     *     "id" : "车辆id",
+     *     "opr_user" : "发布人员编号"
+     *      }),
      *     produces={"application/json"},
      *     @SWG\Response(
      *         response="200",
-     *         description="获取成功",
+     *         description="",
      *         @SWG\Schema(ref="#/definitions/ApiResponse")
      *     ),
      *     security={{"petstore_auth":{"write:getvehicleinfo", "read:getvehicleinfo"}}}
@@ -166,6 +156,46 @@ class Vehicle extends Base
             } else {
                 return Response::create(['resultCode' => 202, 'resultMsg' => '获取车辆失败！'], 'json', 200);
             }
+        } catch (Exception $e) {
+            return Response::create(['resultCode' => 4000, 'resultMsg' => $e->getMessage()], 'json', 400);
+        }
+    }
+    /**
+     * @SWG\Get(
+     *     path="/api/vehicle/updatestatus?id={id}&status={status}",
+     *     tags={"3-车辆管理部分接口，更新车辆状态,status=2是审核通过 status=3是审核不通过"},
+     *     operationId="updatestatus",
+     *     summary="3.3-更新车辆状态",
+     *     description="更新车辆状态。",
+     *     consumes={"application/json"},
+     *     @SWG\Parameter(
+     *         id="id",
+     *         status="status",
+     *     ),
+     *     produces={"application/json"},
+     *     @SWG\Response(
+     *         response="200",
+     *         description="更新成功",
+     *         @SWG\Schema(ref="#/definitions/ApiResponse")
+     *     ),
+     *     security={{"petstore_auth":{"write:updatestatus", "read:updatestatus"}}}
+     * )
+     */
+    public function updatestatus(Request $request)
+    {
+        $id = $request->get("id");
+        $status = $request->get("status");
+
+        if (empty($id)) {
+            return Response::create(['resultCode' => 4000, 'resultMsg' => '请求参数错误！'], 'json', 400);
+        }
+        try {
+
+            $model = new \app\api\model\Vehicle();
+            //print_r($params);
+            //exit;
+            $returnData = $model->vehicleupdate($id,$status);
+            return Response::create(['resultCode' => 200, 'resultMsg' => '状态更新成功！'], 'json', 200);
         } catch (Exception $e) {
             return Response::create(['resultCode' => 4000, 'resultMsg' => $e->getMessage()], 'json', 400);
         }
