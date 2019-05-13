@@ -24,7 +24,23 @@ class Config extends Base
             ->limit(1)->select();
 
         if (!empty($returnData)) {
-            return json_decode(json_encode($returnData[0], true));
+            $res = array(
+                "title" => $returnData[0]["title"],
+                "company" => $returnData[0]["company"],
+                "mobile" => $returnData[0]["mobile"],
+                "telno" => $returnData[0]["telno"],
+                "weixinimg1" => $returnData[0]["weixinimg1"],
+                "weixinimg2" => $returnData[0]["weixinimg2"],
+                "arr" => array(
+                    $returnData[0]["adimg1"],
+                    $returnData[0]["adimg2"],
+                    $returnData[0]["adimg3"],
+                    $returnData[0]["adimg4"]
+                )
+            );
+
+            return json_decode(json_encode($res, true));
+
         } else {
             return null;
         }
