@@ -260,7 +260,7 @@ class Vehicle extends Base
 
             }
             if($userinfo['roleid']!=2){//管理员显示所有车辆
-                $params[] = ['status','=',1];
+                $params[] = ['status','=',2];
             }
             //print_r($params);
             //exit;
