@@ -249,13 +249,18 @@ class Vehicle extends Base
             }
 
             $model = new \app\api\model\Vehicle();
+            $userinfo = $model->getuserid($openid);
             if($self==1){
-                $userinfo = $model->getuserid($openid);
+
 
                 if(empty($userinfo)){
                     return Response::create(['resultCode' => 202, 'resultMsg' => '没有该用户！'], 'json', 202);
                 }
                 $params[] = ['opr_user','=',$userinfo['userid']];
+
+            }
+            if($userinfo['roleid']!=2){//管理员显示所有车辆
+                $params[] = ['status','=',1];
             }
             //print_r($params);
             //exit;

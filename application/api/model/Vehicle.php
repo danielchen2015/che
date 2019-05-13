@@ -98,9 +98,34 @@ class Vehicle extends Base
     {
         //print_r($data);
         //exit;
+        $change['status']=$status;
+        if($status==2){
+            $maxcode=$this->getmaxcode();
+            //print_r($maxcode);
+            //exit;
+            if(!empty($maxcode[0]['code'])){
+                $change['code']=$maxcode[0]['code']+1;
+            }else{
+                $change['code']=10000;
+            }
+
+        }
         return Db::table('che_vehicle')
             ->where('id','=',$id)
-            ->update(['status'=>$status]);
+            ->update($change);
+
+
+    }
+    /**
+     * @param
+     * 获取code最大值
+     */
+    public function getmaxcode()
+    {
+
+        return Db::table('che_vehicle')
+            ->field('max(code) as code')
+            ->select();
 
 
     }
