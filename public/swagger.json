@@ -335,14 +335,14 @@
                 ]
             }
         },
-        "/api/vehicle/add": {
-            "post": {
+        "/api/vehicle/getonevehicleinfo?id={id}&openid={openid}": {
+            "get": {
                 "tags": [
                     "3-\u8f66\u8f86\u7ba1\u7406\u90e8\u5206\u63a5\u53e3"
                 ],
-                "summary": "3.1-\u6dfb\u52a0\u8f66\u8f86",
-                "description": "\u6dfb\u52a0\u8f66\u8f86(\u4e3a\u5c0f\u7a0b\u5e8f\u4f7f\u7528)\u3002",
-                "operationId": "add",
+                "summary": "3.2-\u83b7\u53d6\u8f66\u8f86\u4fe1\u606f",
+                "description": "\u83b7\u53d6\u8f66\u8f86\u4fe1\u606f(\u4e3a\u5c0f\u7a0b\u5e8f\u4f7f\u7528)\u3002\u53ef\u53ea\u4f20\u4e00\u4e2a\u53c2\u6570id\uff0c\u83b7\u53d6\u6211\u53d1\u5e03\u7684\u8f66\u8f86\u4e5f\u662f\u5728\u8fd9\u91cc",
+                "operationId": "getvehicleinfo",
                 "consumes": [
                     "application/json"
                 ],
@@ -351,44 +351,23 @@
                 ],
                 "parameters": [
                     {
-                        "name": "body",
-                        "in": "body",
-                        "description": "Json\u683c\u5f0f",
-                        "required": true,
-                        "schema": {
-                            "example": {
-                                "price": "\u4ef7\u683c",
-                                "models": "\u8f66\u578b",
-                                "boarddateyear": "\u4e0a\u724c\u65e5\u671f\u5e74\u4efd",
-                                "boarddatemonth": "\u4e0a\u724c\u65e5\u671f\u6708\u4efd",
-                                "proddateyear": "\u51fa\u5382\u65e5\u671f\u5e74\u4efd",
-                                "proddatemonth": "\u51fa\u5382\u65e5\u671f\u6708\u4efd",
-                                "realmileage": "\u771f\u5b9e\u91cc\u7a0b",
-                                "condition": "\u8f66\u51b5\u63cf\u8ff0",
-                                "contacttel": "\u8054\u7cfb\u7535\u8bdd",
-                                "vehicleimgs": "\u8f66\u8f86\u7167\u7247json\u683c\u5f0f",
-                                "weixinimg": "\u5fae\u4fe1\u4e8c\u7ef4\u7801\u5730\u5740",
-                                "guideprice": "\u65b0\u8f66\u6307\u5bfc\u4ef7",
-                                "displacement": "\u6c7d\u8f66\u6392\u91cf",
-                                "configuration": "\u8f66\u8f86\u914d\u7f6e",
-                                "loc_province": "\u8f66\u8f86\u6240\u5728\u5730\u7701\u4efd",
-                                "loc_city": "\u8f66\u8f86\u6240\u5728\u5730\u57ce\u5e02",
-                                "loc_area": "\u8f66\u8f86\u6240\u5728\u5730\u533a\u57df",
-                                "transfer_times": "\u8fc7\u6237\u6b21\u6570",
-                                "fixprice": "\u4e00\u53e3\u4ef7",
-                                "status": "\u72b6\u6001",
-                                "popularity_index": "\u4eba\u6c14\u6307\u6570",
-                                "dial_index": "\u62e8\u53f7\u6307\u6570",
-                                "score": "\u4f1a\u5458\u79ef\u5206",
-                                "opr_user": "\u53d1\u5e03\u4eba\u5458\u7f16\u53f7"
-                            }
-                        },
-                        "type": "string"
+                        "name": "id",
+                        "in": "query",
+                        "description": "id",
+                        "required": false,
+                        "format": "string"
+                    },
+                    {
+                        "name": "openid",
+                        "in": "query",
+                        "description": "openid",
+                        "required": false,
+                        "format": "string"
                     }
                 ],
                 "responses": {
                     "200": {
-                        "description": "\u6dfb\u52a0\u8f66\u8f86\u6210\u529f",
+                        "description": "",
                         "schema": {
                             "$ref": "#/definitions/ApiResponse"
                         }
@@ -397,19 +376,19 @@
                 "security": [
                     {
                         "petstore_auth": [
-                            "write:add",
-                            "read:add"
+                            "write:getonevehicleinfo",
+                            "read:getonevehicleinfo"
                         ]
                     }
                 ]
             }
         },
-        "/api/vehicle/getvehicleinfo": {
-            "post": {
+        "/api/vehicle/getvehicleinfo?openid={openid}&pricefrom={pricefrom}&priceto={priceto}&timefrom={timefrom}&timeto={timeto}&models={models}&self=1": {
+            "get": {
                 "tags": [
                     "3-\u8f66\u8f86\u7ba1\u7406\u90e8\u5206\u63a5\u53e3"
                 ],
-                "summary": "3.2-\u83b7\u53d6\u8f66\u8f86\u4fe1\u606f",
+                "summary": "3.3-\u83b7\u53d6\u8f66\u8f86\u4fe1\u606f",
                 "description": "\u83b7\u53d6\u8f66\u8f86\u4fe1\u606f(\u4e3a\u5c0f\u7a0b\u5e8f\u4f7f\u7528)\u3002\u53ef\u53ea\u4f20\u4e00\u4e2a\u53c2\u6570\uff0c\u83b7\u53d6\u6211\u53d1\u5e03\u7684\u8f66\u8f86\u4e5f\u662f\u5728\u8fd9\u91cc",
                 "operationId": "getvehicleinfo",
                 "consumes": [
@@ -420,22 +399,58 @@
                 ],
                 "parameters": [
                     {
-                        "name": "body",
-                        "in": "body",
-                        "description": "Json\u683c\u5f0f",
-                        "required": true,
-                        "schema": {
-                            "example": {
-                                "id": "\u8f66\u8f86id",
-                                "opr_user": "\u53d1\u5e03\u4eba\u5458\u7f16\u53f7"
-                            }
-                        },
-                        "type": "string"
+                        "name": "openid",
+                        "in": "query",
+                        "description": "openid",
+                        "required": false,
+                        "format": "string"
+                    },
+                    {
+                        "name": "pricefrom",
+                        "in": "query",
+                        "description": "\u4ef7\u683c\u5f00\u59cb",
+                        "required": false,
+                        "format": "string"
+                    },
+                    {
+                        "name": "priceto",
+                        "in": "query",
+                        "description": "\u4ef7\u683c\u622a\u6b62",
+                        "required": false,
+                        "format": "string"
+                    },
+                    {
+                        "name": "timefrom",
+                        "in": "query",
+                        "description": "\u65f6\u95f4\u5f00\u59cb",
+                        "required": false,
+                        "format": "string"
+                    },
+                    {
+                        "name": "timeto",
+                        "in": "query",
+                        "description": "\u65f6\u95f4\u622a\u6b62",
+                        "required": false,
+                        "format": "string"
+                    },
+                    {
+                        "name": "models",
+                        "in": "query",
+                        "description": "\u8f66\u578b",
+                        "required": false,
+                        "format": "string"
+                    },
+                    {
+                        "name": "self",
+                        "in": "query",
+                        "description": "\u5982\u679c\u8981\u67e5\u81ea\u5df1\u53d1\u5e03\u7684 \u90a3\u5c31\u52a0\u8fd9\u4e2a\u53c2\u6570 \u503c\u4e3a1 \u4e0d\u52a0\u9ed8\u8ba4\u6240\u6709",
+                        "required": false,
+                        "format": "string"
                     }
                 ],
                 "responses": {
                     "200": {
-                        "description": "\u83b7\u53d6\u6210\u529f",
+                        "description": "",
                         "schema": {
                             "$ref": "#/definitions/ApiResponse"
                         }
@@ -446,6 +461,54 @@
                         "petstore_auth": [
                             "write:getvehicleinfo",
                             "read:getvehicleinfo"
+                        ]
+                    }
+                ]
+            }
+        },
+        "/api/vehicle/updatestatus?id={id}&status={status}": {
+            "get": {
+                "tags": [
+                    "3-\u8f66\u8f86\u7ba1\u7406\u90e8\u5206\u63a5\u53e3"
+                ],
+                "summary": "3.3-\u66f4\u65b0\u8f66\u8f86\u72b6\u6001",
+                "description": "\u66f4\u65b0\u8f66\u8f86\u72b6\u6001\u3002\u66f4\u65b0\u8f66\u8f86\u72b6\u6001,status=2\u662f\u5ba1\u6838\u901a\u8fc7 status=3\u662f\u5ba1\u6838\u4e0d\u901a\u8fc7",
+                "operationId": "updatestatus",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "query",
+                        "description": "id",
+                        "required": false,
+                        "format": "string"
+                    },
+                    {
+                        "name": "status",
+                        "in": "query",
+                        "description": "\u72b6\u6001",
+                        "required": false,
+                        "format": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "\u66f4\u65b0\u6210\u529f",
+                        "schema": {
+                            "$ref": "#/definitions/ApiResponse"
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "petstore_auth": [
+                            "write:updatestatus",
+                            "read:updatestatus"
                         ]
                     }
                 ]

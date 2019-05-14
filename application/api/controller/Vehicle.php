@@ -28,33 +28,39 @@ class Vehicle extends Base
      *     summary="3.1-添加车辆",
      *     description="添加车辆(为小程序使用)。",
      *     consumes={"application/json"},
-     *     @SWG\Property(example={
-     *     "openid": "openid"
+     *     @SWG\Parameter(
+     *         name="body",
+     *         in="body",
+     *         description="Json格式",
+     *         required=true,
+     *         type="string",
+     *         @SWG\Property(example={
+     *     "openid": "openid",
      *     "price" : "价格",
      *     "models": "车型",
-     *     "boarddateyear": "上牌日期年份"
-     *     "boarddatemonth": "上牌日期月份"*
-     *     "proddateyear": "出厂日期年份"
-     *     "proddatemonth": "出厂日期月份"
-     *     "realmileage": "真实里程"
-     *     "condition": "车况描述"
-     *     "contacttel": "联系电话"
-     *     "vehicleimgs": "车辆照片json格式 ["/upload/20190511/JjTfWAF0DD.png","/upload/20190511/JjTfWAF0DD.png","/upload/20190511/JjTfWAF0DD.png","/upload/20190511/JjTfWAF0DD.png","/upload/20190511/JjTfWAF0DD.png","/upload/20190511/JjTfWAF0DD.png","/upload/20190511/JjTfWAF0DD.png","/upload/20190511/JjTfWAF0DD.png","/upload/20190511/JjTfWAF0DD.png","/upload/20190511/JjTfWAF0DD.png","/upload/20190511/JjTfWAF0DD.png"]"
-     *     "weixinimg": "微信二维码地址"
-     *     "guideprice": "新车指导价"
-     *     "displacement": "汽车排量"
-     *     "configuration": "车辆配置"
-     *     "loc_province": "车辆所在地省份"
-     *     "loc_city": "车辆所在地城市"
-     *     "loc_area": "车辆所在地区域"
-     *     "transfer_times": "过户次数"
+     *     "boarddateyear": "上牌日期年份",
+     *     "boarddatemonth": "上牌日期月份",
+     *     "proddateyear": "出厂日期年份",
+     *     "proddatemonth": "出厂日期月份",
+     *     "realmileage": "真实里程",
+     *     "condition": "车况描述",
+     *     "contacttel": "联系电话",
+     *     "vehicleimgs": "车辆照片json格式 ["/upload/20190511/JjTfWAF0DD.png","/upload/20190511/JjTfWAF0DD.png","/upload/20190511/JjTfWAF0DD.png","/upload/20190511/JjTfWAF0DD.png","/upload/20190511/JjTfWAF0DD.png","/upload/20190511/JjTfWAF0DD.png","/upload/20190511/JjTfWAF0DD.png","/upload/20190511/JjTfWAF0DD.png","/upload/20190511/JjTfWAF0DD.png","/upload/20190511/JjTfWAF0DD.png","/upload/20190511/JjTfWAF0DD.png"]",
+     *     "weixinimg": "微信二维码地址",
+     *     "guideprice": "新车指导价",
+     *     "displacement": "汽车排量",
+     *     "configuration": "车辆配置",
+     *     "loc_province": "车辆所在地省份",
+     *     "loc_city": "车辆所在地城市",
+     *     "loc_area": "车辆所在地区域",
+     *     "transfer_times": "过户次数",
      *     "fixprice": "一口价"
-     *     "status": "状态"
-     *     "popularity_index": "人气指数"
-     *     "dial_index": "拨号指数"
-     *     "score": "会员积分"
-     *     "opr_user": "发布人员编号"
-     *      }),
+     *     "status": "状态(1:待审核, 2：在售, 3：审核未通过)",
+     *     "popularity_index": "人气指数",
+     *     "dial_index": "拨号指数",
+     *     "score": "会员积分",
+     *     "opr_user": "发布人员编号"})
+     *     ),
      *     produces={"application/json"},
      *     @SWG\Response(
      *         response="200",
@@ -84,7 +90,7 @@ class Vehicle extends Base
             $params['realmileage'] = $inputData->realmileage;
             $params['condition'] = $inputData->condition;
             $params['contacttel'] = $inputData->contacttel;
-            $params['vehicleimgs'] = json_encode($inputData->vehicleimgs,JSON_UNESCAPED_SLASHES);
+            $params['vehicleimgs'] = json_encode($inputData->vehicleimgs, JSON_UNESCAPED_SLASHES);
             $params['weixinimg'] = $inputData->weixinimg;
             $params['guideprice'] = $inputData->guideprice;
             $params['displacement'] = $inputData->displacement;
@@ -105,12 +111,12 @@ class Vehicle extends Base
 
             $model = new \app\api\model\Vehicle();
             $userinfo = $model->getuserid($openid);
-           // print_r($userinfo);
+            // print_r($userinfo);
             //exit;
-            if(empty($userinfo)){
+            if (empty($userinfo)) {
                 return Response::create(['resultCode' => 202, 'resultMsg' => '没有该用户！'], 'json', 202);
             }
-            $params['opr_user']=$userinfo['userid'];
+            $params['opr_user'] = $userinfo['userid'];
             //print_r($params);
             //exit;
             $returnData = $model->vehicleAdd($params);
@@ -123,18 +129,29 @@ class Vehicle extends Base
             return Response::create(['resultCode' => 4000, 'resultMsg' => $e->getMessage()], 'json', 400);
         }
     }
+
     /**
-     * @SWG\get(
-     *     path="/api/vehicle/getonevehicleinfo?id={openid}&openid={openid}",
-     *     tags={"3-车辆管理部分接口，可只传一个参数id，获取我发布的车辆也是在这里"},
+     * @SWG\Get(
+     *     path="/api/vehicle/getonevehicleinfo?id={id}&openid={openid}",
+     *     tags={"3-车辆管理部分接口"},
      *     operationId="getvehicleinfo",
      *     summary="3.2-获取车辆信息",
-     *     description="获取车辆信息(为小程序使用)。",
+     *     description="获取车辆信息(为小程序使用)。可只传一个参数id，获取我发布的车辆也是在这里",
      *     consumes={"application/json"},
-     *     @SWG\Property(example={
-     *     "id" : "车辆id",
-     *     "openid" : "openid",
-     *      }),
+     *     @SWG\Parameter(
+     *         name="id",
+     *         in="query",
+     *         description="id",
+     *         required=false,
+     *         format="string",
+     *     ),
+     *     @SWG\Parameter(
+     *         name="openid",
+     *         in="query",
+     *         description="openid",
+     *         required=false,
+     *         format="string",
+     *     ),
      *     produces={"application/json"},
      *     @SWG\Response(
      *         response="200",
@@ -149,7 +166,7 @@ class Vehicle extends Base
         $openid = $request->get("openid");
         $id = $request->get("id");
 
-        if (empty($openid)||empty($id)) {
+        if (empty($openid) || empty($id)) {
             return Response::create(['resultCode' => 4000, 'resultMsg' => '请求参数错误！'], 'json', 400);
         }
         try {
@@ -158,22 +175,22 @@ class Vehicle extends Base
             $model = new \app\api\model\Vehicle();
             $userinfo = $model->getuserid($openid);
 
-            if(empty($userinfo)){
+            if (empty($userinfo)) {
                 return Response::create(['resultCode' => 202, 'resultMsg' => '没有该用户！'], 'json', 202);
             }
             $params["id"] = $id;
             $returnData = $model->vehicleinfo($params);
-            if($returnData['opr_user']==$userinfo['userid']){
-                $returnData['self']="yes";
-            }else{
-                $returnData['self']="no";
+            if ($returnData['opr_user'] == $userinfo['userid']) {
+                $returnData['self'] = "yes";
+            } else {
+                $returnData['self'] = "no";
             }
             $config = $model->getconfig();
-            $returnData['weixinimg1']=$config['weixinimg1'];
-            $returnData['weixinimg2']=$config['weixinimg2'];
+            $returnData['weixinimg1'] = $config['weixinimg1'];
+            $returnData['weixinimg2'] = $config['weixinimg2'];
             //print_r($returnData);
             //exit;
-           // if($returnData[''])
+            // if($returnData[''])
             if (!empty($returnData)) {
                 return Response::create(['resultCode' => 200, 'resultMsg' => $returnData], 'json', 200);
             } else {
@@ -183,27 +200,61 @@ class Vehicle extends Base
             return Response::create(['resultCode' => 4000, 'resultMsg' => $e->getMessage()], 'json', 400);
         }
     }
+
     /**
-     * @SWG\get(
+     * @SWG\Get(
      *     path="/api/vehicle/getvehicleinfo?openid={openid}&pricefrom={pricefrom}&priceto={priceto}&timefrom={timefrom}&timeto={timeto}&models={models}&self=1",
-     *     tags={"3-车辆管理部分接口，可只传一个参数，获取我发布的车辆也是在这里"},
+     *     tags={"3-车辆管理部分接口"},
      *     operationId="getvehicleinfo",
-     *     summary="3.2-获取车辆信息",
-     *     description="获取车辆信息(为小程序使用)。",
+     *     summary="3.3-获取车辆信息",
+     *     description="获取车辆信息(为小程序使用)。可只传一个参数，获取我发布的车辆也是在这里",
      *     consumes={"application/json"},
      *     @SWG\Parameter(
-     *         openid="openid",
-     *         pricefrom="价格开始",
-     *         priceto="价格截止",
-     *         timefrom="时间开始",
-     *         timeto="时间截止",
-     *         models=车型,
-     *         self="如果要查自己发布的 那就加这个参数 值为1 不加默认所有",
+     *         name="openid",
+     *         in="query",
+     *         description="openid",
+     *         required=false,
+     *         format="string",
      *     ),
      *     @SWG\Parameter(
-     *         openid="openid",
+     *         name="pricefrom",
      *         in="query",
-     *         description="手机号",
+     *         description="价格开始",
+     *         required=false,
+     *         format="string",
+     *     ),
+     *     @SWG\Parameter(
+     *         name="priceto",
+     *         in="query",
+     *         description="价格截止",
+     *         required=false,
+     *         format="string",
+     *     ),
+     *     @SWG\Parameter(
+     *         name="timefrom",
+     *         in="query",
+     *         description="时间开始",
+     *         required=false,
+     *         format="string",
+     *     ),
+     *     @SWG\Parameter(
+     *         name="timeto",
+     *         in="query",
+     *         description="时间截止",
+     *         required=false,
+     *         format="string",
+     *     ),
+     *     @SWG\Parameter(
+     *         name="models",
+     *         in="query",
+     *         description="车型",
+     *         required=false,
+     *         format="string",
+     *     ),
+     *     @SWG\Parameter(
+     *         name="self",
+     *         in="query",
+     *         description="如果要查自己发布的 那就加这个参数 值为1 不加默认所有",
      *         required=false,
      *         format="string",
      *     ),
@@ -218,14 +269,13 @@ class Vehicle extends Base
      */
     public function getvehicleinfo(Request $request)
     {
-        $openid=$request->get("openid");
-        $pricefrom=$request->get("pricefrom");
-        $priceto=$request->get("priceto");
-        $timefrom=$request->get("timefrom");
-        $timeto=$request->get("timeto");
-        $models=$request->get("models");
-        $self=$request->get("self");
-
+        $openid = $request->param("openid");
+        $pricefrom = $request->param("pricefrom");
+        $priceto = $request->param("priceto");
+        $timefrom = $request->param("timefrom");
+        $timeto = $request->param("timeto");
+        $models = $request->param("models");
+        $self = $request->param("self");
 
         if (empty($openid)) {
             return Response::create(['resultCode' => 4000, 'resultMsg' => '请求参数错误！'], 'json', 400);
@@ -233,34 +283,32 @@ class Vehicle extends Base
         try {
             $params = array();
 
-            if(!empty($pricefrom)){
-                $params[] = ['price','>',$pricefrom];
+            if (!empty($pricefrom)) {
+                $params[] = ['price', '>', $pricefrom];
             }
-            if(!empty($priceto)){
-                $params[] = ['price','<',$priceto];
+            if (!empty($priceto)) {
+                $params[] = ['price', '<', $priceto];
             }
-            if(!empty($timefrom)){
-                $params[] = ['opr_datetime','>',$timefrom];
-            }if(!empty($timeto)){
-                $params[] = ['opr_datetime','<',$timeto];
+            if (!empty($timefrom)) {
+                $params[] = ['opr_datetime', '>', $timefrom];
             }
-            if(!empty($models)){
-                $params[] = ['models','like','%'.$models.'%'];
+            if (!empty($timeto)) {
+                $params[] = ['opr_datetime', '<', $timeto];
+            }
+            if (!empty($models)) {
+                $params[] = ['models', 'like', '%' . $models . '%'];
             }
 
             $model = new \app\api\model\Vehicle();
             $userinfo = $model->getuserid($openid);
-            if($self==1){
-
-
-                if(empty($userinfo)){
-                    return Response::create(['resultCode' => 202, 'resultMsg' => '没有该用户！'], 'json', 202);
+            if ($self == 1) {
+                $params[] = ['opr_user', '=', $userinfo['userid']];
+            }else{
+                if (empty($userinfo)) {
+                    if ($userinfo['roleid'] != 2) {//管理员显示所有车辆
+                        $params[] = ['status', '=', 2];
+                    }
                 }
-                $params[] = ['opr_user','=',$userinfo['userid']];
-
-            }
-            if($userinfo['roleid']!=2){//管理员显示所有车辆
-                $params[] = ['status','=',2];
             }
             //print_r($params);
             //exit;
@@ -274,17 +322,28 @@ class Vehicle extends Base
             return Response::create(['resultCode' => 4000, 'resultMsg' => $e->getMessage()], 'json', 400);
         }
     }
+
     /**
      * @SWG\Get(
      *     path="/api/vehicle/updatestatus?id={id}&status={status}",
-     *     tags={"3-车辆管理部分接口，更新车辆状态,status=2是审核通过 status=3是审核不通过"},
+     *     tags={"3-车辆管理部分接口"},
      *     operationId="updatestatus",
      *     summary="3.3-更新车辆状态",
-     *     description="更新车辆状态。",
+     *     description="更新车辆状态。更新车辆状态,status=2是审核通过 status=3是审核不通过",
      *     consumes={"application/json"},
      *     @SWG\Parameter(
-     *         id="id",
-     *         status="status",
+     *         name="id",
+     *         in="query",
+     *         description="id",
+     *         required=false,
+     *         format="string",
+     *     ),
+     *     @SWG\Parameter(
+     *         name="status",
+     *         in="query",
+     *         description="状态",
+     *         required=false,
+     *         format="string",
      *     ),
      *     produces={"application/json"},
      *     @SWG\Response(
@@ -308,7 +367,7 @@ class Vehicle extends Base
             $model = new \app\api\model\Vehicle();
             //print_r($params);
             //exit;
-            $returnData = $model->vehicleupdate($id,$status);
+            $returnData = $model->vehicleupdate($id, $status);
             return Response::create(['resultCode' => 200, 'resultMsg' => '状态更新成功！'], 'json', 200);
         } catch (Exception $e) {
             return Response::create(['resultCode' => 4000, 'resultMsg' => $e->getMessage()], 'json', 400);
