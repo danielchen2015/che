@@ -335,6 +335,61 @@
                 ]
             }
         },
+        "/api/User/loginWxxcx?code={code}&encryptedData={encryptedData}&iv={iv}": {
+            "get": {
+                "tags": [
+                    "1-\u7528\u6237\u7ba1\u7406\u90e8\u5206\u63a5\u53e3"
+                ],
+                "summary": "1.3-\u83b7\u53d6\u7528\u6237\u4fe1\u606f",
+                "description": "\u83b7\u53d6\u7528\u6237\u4fe1\u606f(\u4e3a\u5c0f\u7a0b\u5e8f\u4f7f\u7528)\u3002code\\encryptedData\\iv\u3002",
+                "operationId": "loginWxxcx",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "code",
+                        "in": "query",
+                        "description": "code",
+                        "required": false,
+                        "format": "string"
+                    },
+                    {
+                        "name": "encryptedData",
+                        "in": "query",
+                        "description": "encryptedData",
+                        "required": false,
+                        "format": "string"
+                    },
+                    {
+                        "name": "iv",
+                        "in": "query",
+                        "description": "iv",
+                        "required": false,
+                        "format": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "\u6dfb\u52a0\u6210\u529f",
+                        "schema": {
+                            "$ref": "#/definitions/ApiResponse"
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "petstore_auth": [
+                            "write:loginWxxcx",
+                            "read:loginWxxcx"
+                        ]
+                    }
+                ]
+            }
+        },
         "/api/vehicle/getonevehicleinfo?id={id}&openid={openid}": {
             "get": {
                 "tags": [
