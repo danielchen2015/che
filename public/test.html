@@ -13,7 +13,7 @@
     //var userUrl = "http://che/api/User/add";
     var userUrl = "http://che/api/User/info?openid=asdfwefasdfasdfaefae";
     var userUrl = "http://che/api/Config/info";
-    var userUrl = "http://che/api/vehicle/add";
+    var userUrl = "http://che/api/User/loginWxxcx?code=0212WHnm0t35as1uBUpm0G2Nnm02WHnt&encryptedData=tmHXqKV+ztiTKQ9ieDgowsMGgrqj4D2i2g84zcO8js6R/JMMIzkSkbxjHa3AnUIc+hW+D/lfEqjg56TSVFURK6fcyElr9CUl3qNdkNv/RCd4w+kUmAphKYriFhk4SB9dwCXUGremRblMQj7fxrW7FtDvCEiVpzLeLDm4c8ECt3c897Ry6ptEnZmk1ybMxWkBAld35k2sJMMW03sY3w1X0ahwz/6h+Qtg7sungf1wcQyf3SrkZEm73vCVd+a+nqM2zah3NwjHSk/ej/v3Mxp/6IyDUCPzEgTfMfByQ91E/78ETyF1XaeHaJAqvBFNZ7FnZGQiaBHT8JFhnLlFLg0JjhVHyM4yoX/eIZYrrwnqN85pi2gqi1qBGW8V7l/Lr8DqYdVPB6GAVMpIAGIkzT/+mu2YeUghAuoGh9ksC7BTAmQSYzJx2KeX/rD0YUwbfoV5XOyDZGDGbSuKKox2f+BRukPkIs6B5JmQ88eXHf2vhjI=&iv=YPtZbMDMKQGT2JSls+PFIw==";
 
     var post_data = {
         "price":"10",
@@ -44,7 +44,7 @@
     };
 
     console.log(userUrl);
-    $.ajax({
+    /*$.ajax({
         url: userUrl,
         type: 'post',
         contentType: "application/json;charset=UTF-8",
@@ -58,12 +58,12 @@
             //调用失败
             console.log(data, errorThrown);
         }
-    });
-    /*$.ajax({
+    });*/
+    $.ajax({
         url: userUrl,
         type: 'get',
         contentType: "application/json; charset=utf-8",
-        data: JSON.stringify(post_data),
+        data: "",//JSON.stringify(post_data),
         success: function (data) {
             //调用成功
             console.log("in");
@@ -73,7 +73,7 @@
             //调用失败
             console.log(data.responseText);
         }
-    });*/
+    });
 
 </script>
 </html>
