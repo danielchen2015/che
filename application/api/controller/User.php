@@ -178,9 +178,10 @@ class User extends Base
             'js_code' => $code,
             'grant_type' => 'authorization_code'
         );
+
         $model = new \app\api\model\User();
         //http函数为封装的请求函数
-        $res = $model->http("https://api.weixin.qq.com/sns/jscode2session", $param, 'post');
+        $res = $model->http("https://api.weixin.qq.com/sns/jscode2session", $param, 'get');
 
         $arr = json_decode($res, true);
 
@@ -188,7 +189,7 @@ class User extends Base
 
         //return json($result);
         if ($result) {
-            return Response::create(['resultCode' => 000, 'resultMsg' => 1], 'json', 200);
+            return Response::create(['resultCode' => 000, 'resultMsg' => $result], 'json', 200);
         } else {
             return Response::create(['resultCode' => 400, 'resultMsg' => -1], 'json', 200);
         }

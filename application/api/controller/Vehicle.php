@@ -276,9 +276,14 @@ class Vehicle extends Base
         $timeto = $request->param("timeto");
         $models = $request->param("models");
         $self = $request->param("self");
+        $status = $request->param("status");
 
-        if (empty($openid)) {
-            return Response::create(['resultCode' => 4000, 'resultMsg' => '请求参数错误！'], 'json', 400);
+        if (!empty($self)) {
+            if($self == 1){
+                if(empty($openid)){
+                    return Response::create(['resultCode' => 4000, 'resultMsg' => '请先登录！'], 'json', 400);
+                }
+            }
         }
         try {
             $params = array();
@@ -298,12 +303,15 @@ class Vehicle extends Base
             if (!empty($models)) {
                 $params[] = ['models', 'like', '%' . $models . '%'];
             }
+            if (!empty($status)) {
+                $params[] = ['status', '=', $status];
+            }
 
             $model = new \app\api\model\Vehicle();
             $userinfo = $model->getuserid($openid);
             if ($self == 1) {
                 $params[] = ['opr_user', '=', $userinfo['userid']];
-            }else{
+            } else {
                 if (empty($userinfo)) {
                     if ($userinfo['roleid'] != 2) {//管理员显示所有车辆
                         $params[] = ['status', '=', 2];
@@ -313,6 +321,17 @@ class Vehicle extends Base
             //print_r($params);
             //exit;
             $returnData = $model->vehicleinfo($params);
+
+            if (!empty($returnData)) {
+                foreach ($returnData as &$item){
+                    $item['vehicleimgs'] = str_replace('[', '', $item['vehicleimgs']);
+                    $item['vehicleimgs'] = str_replace(']', '', $item['vehicleimgs']);
+                    $item['vehicleimgs'] = str_replace('"', '', $item['vehicleimgs']);
+                    $item['vehicleimgs'] = str_replace('\\', '', $item['vehicleimgs']);
+                    $item['vehicleimgs'] = stripslashes($item['vehicleimgs']);
+                    $item['arr'] = explode(',', $item['vehicleimgs']);
+                }
+            }
             if (!empty($returnData)) {
                 return Response::create(['resultCode' => 200, 'resultMsg' => $returnData], 'json', 200);
             } else {

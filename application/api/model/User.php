@@ -117,7 +117,7 @@ class User extends Base
 
         $data = null;
         $errCode = $this->decryptData($encryptedData, $iv, $data);
-        //echo $data;
+        //echo $data;exit;
         //return json(['data'=>$data]);
         $data = json_decode($data);
 
