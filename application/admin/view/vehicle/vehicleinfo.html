@@ -394,7 +394,7 @@
     function  showprovince(obj) {
         var provinceid=$(obj).find("option:selected").attr("datacase");
         $.ajax( {
-            url:'/index.php/areas/getcity?proviceid='+provinceid,// 跳转到 action
+            url:'/index.php/api/areas/getcity?proviceid='+provinceid,// 跳转到 action
             type:'get',
             cache:false,
             dataType:'json',
@@ -409,7 +409,7 @@
                 console.log(htmllist);
                 $("select[name='data[loc_city]'").empty();
                 $("select[name='data[loc_city]'").append(htmllist);
-                $.get("/index.php/areas/getarea?cityid="+result[0].cityid, function(data){
+                $.get("/index.php/api/areas/getarea?cityid="+result[0].cityid, function(data){
                     var result= data.resultMsg;
                     var htmllistc="";
                     for(var i=0;i<result.length;i++){
@@ -430,7 +430,7 @@
     function  showcity(obj) {
         var cityid=$(obj).find("option:selected").attr("datacase");
         //console.log($(obj).find("option:selected").attr("datacase"));
-        $.get("/index.php/areas/getarea?cityid="+cityid, function(data){
+        $.get("/index.php/api/areas/getarea?cityid="+cityid, function(data){
             var result= data.resultMsg;
             var htmllistc="";
             for(var i=0;i<result.length;i++){
@@ -447,7 +447,7 @@
 
     function  examone(obj,id) {
 
-        $.get("/index.php/vehicle/updatestatus?id="+id+"&status="+obj, function(data){
+        $.get("/index.php/api/vehicle/updatestatus?id="+id+"&status="+obj, function(data){
             if(data.resultCode==200){
                 location.href='vlist'
             }

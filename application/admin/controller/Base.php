@@ -19,7 +19,7 @@ class Base extends Controller
         parent::__construct();
         $this->userid = session('userid');
         if (!$this->userid) {
-            $this->redirect('/index.php/admin/User/login');
+            $this->redirect('/admin/User/login');
         }
         $this->assign('userid', session('userid'));
         $this->assign('username', session('username'));

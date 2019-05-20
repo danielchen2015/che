@@ -66,7 +66,7 @@
                                 <td><?=$value['price'];?></td>
                                 <td><span class="label <?php if($value['status']==1):?>label-warning label-mini">待审核<?php elseif($value['status']==2):?> label-primary label-mini">通过<?php else: ?>label-danger label-mini">不通过<?php endif;?></span></td>
                                 <td>
-                                    <a class="btn btn-success btn-sm" href="/admin/vehicle/vehicleinfo?id=<?=$value['id'];?>"><i class="fa fa-fw fa-edit"></i></a>
+                                    <a class="btn btn-success btn-sm" href="/index.php/admin/vehicle/vehicleinfo?id=<?=$value['id'];?>"><i class="fa fa-fw fa-edit"></i></a>
                                     <!--                                        <button class="btn btn-primary btn-sm"><i class="fa fa-pencil"></i></button>-->
                                     <!--                                        <button class="btn btn-danger btn-sm"><i class="fa fa-trash-o "></i></button>-->
                                 </td>
