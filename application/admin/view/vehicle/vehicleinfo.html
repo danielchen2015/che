@@ -49,6 +49,19 @@
                         <div class="panel-body">
                             <div class="form">
                                 <form class="cmxform form-horizontal tasi-form"  action="{:url('Vehicle/modifyvehile')}" method="post">
+
+                                    <div class="form-group ">
+                                        <label for="id" class="control-label col-lg-2">id</label>
+                                        <div class="col-lg-10">
+                                            <input class="form-control " id="id" name="data[id]" value="<?=$vehicleinfo['id']?>" readonly type="text" />
+                                        </div>
+                                    </div>
+                                    <div class="form-group ">
+                                        <label for="code" class="control-label col-lg-2">编码</label>
+                                        <div class="col-lg-10">
+                                            <input class="form-control " id="code" name="data[id]" value="<?=$vehicleinfo['code']?>" readonly type="text" />
+                                        </div>
+                                    </div>
                                     <div class="form-group ">
                                         <label for="price" class="control-label col-lg-2">价格</label>
                                         <div class="col-lg-10">

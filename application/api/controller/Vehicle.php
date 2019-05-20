@@ -101,8 +101,8 @@ class Vehicle extends Base
             $params['transfer_times'] = $inputData->transfer_times;
             $params['fixprice'] = 0;
             $params['status'] = 1;
-            $params['popularity_index'] = 0;
-            $params['dial_index'] = 0;
+            $params['popularity_index'] = rand(1, 100);
+            $params['dial_index'] = rand(1, 100);
             $params['score'] = 0;
             $params['opr_datetime'] = time();
             //$params['opr_user'] = $inputData->opr_user;
