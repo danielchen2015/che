@@ -73,6 +73,9 @@ class Vehicle extends Controller
             foreach ($data['data'] as $key => $value){
                 $params[$key] = $value;
             }
+            $params["vehicleimgs"] = json_encode($params["vehicleimgs"],320);
+           // print_r($params);
+           // exit;
             //unset($params['id']);
 
 

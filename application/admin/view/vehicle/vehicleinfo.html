@@ -59,7 +59,7 @@
                                     <div class="form-group ">
                                         <label for="code" class="control-label col-lg-2">编码</label>
                                         <div class="col-lg-10">
-                                            <input class="form-control " id="code" name="data[id]" value="<?=$vehicleinfo['code']?>" readonly type="text" />
+                                            <input class="form-control " id="code" name="data[code]" value="<?=$vehicleinfo['code']?>" readonly type="text" />
                                         </div>
                                     </div>
                                     <div class="form-group ">
@@ -311,29 +311,31 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <!-- page start-->
-                                    <section class="panel">
-                                        <header class="panel-heading">
-                                            车辆图片
-                                        </header>
-                                        <div class="panel-body">
-                                            <ul class="grid cs-style-3">
-                                                <?php foreach($vehicleinfo['vehicleimgs'] as $key=>$value){
-                                                echo '<li>
-                                                <figure>
-                                                    <img src="'.$value.'" alt="img04">
-                                                    <figcaption>
-                                                        <h3></h3>
-                                                        <span> </span>
-                                                        <a class="fancybox" rel="group" href="'.$value.'">查看大图</a>
-                                                    </figcaption>
-                                                </figure>
-                                            </li>';
-                                                }
-                                                ?>
-                                            </ul>
 
+                                        <div class="form-group last">
+                                            <label class="control-label col-md-2">车辆图片</label>
+                                            <div class="col-md-9">
+                                                <?php foreach($vehicleinfo['vehicleimgs'] as $key => $value):?>
+                                                <div class="fileupload fileupload-new" name="datass" data-provides="fileupload"><input name="data[vehicleimgs][<?=$key;?>]" class="sss" value="<?=$value?>" type="hidden">
+                                                    <div class="fileupload-new thumbnail" style="width: 200px; height: 150px;">
+
+                                                        <img src="<?=$value?>" alt="">
+                                                    </div>
+                                                    <div class="fileupload-preview fileupload-exists thumbnail" style="max-width: 200px; max-height: 150px; line-height: 10px;"></div>
+                                                    <div>
+                                                       <span class="btn btn-white btn-file">
+                                                       <span class="fileupload-new"><i class="fa fa-paper-clip"></i> 选择图片</span>
+                                                       <span class="fileupload-exists"><i class="fa fa-undo"></i> 改变图片</span>
+                                                       <input type="file" class="default">
+                                                       </span>
+<!--                                                        <a href="#" class="btn btn-danger fileupload-exists" data-dismiss="fileupload"><i class="fa fa-trash"></i> 移除图片</a>-->
+                                                    </div>
+                                                </div>
+                                                <?php endforeach;?>
+                                            </div>
                                         </div>
+
+
                                         <!-- page end-->
                                         <div class="form-group">
                                             <div class="col-lg-offset-2 col-lg-10">
