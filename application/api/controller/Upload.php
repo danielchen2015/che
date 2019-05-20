@@ -114,7 +114,7 @@ class Upload extends Base
         if ($info) {
             $saveName = str_replace("\\", "/", $info->getSaveName());
             $img = '/upload/' . date('Ymd') . '/' . $saveName;
-            $imgUrl = 'http://che.xingyizxmr.com:8080/upload/' . date('Ymd') . '/' . $saveName;
+            $imgUrl = 'https://che.xingyizxmr.com/upload/' . date('Ymd') . '/' . $saveName;
             $resData = array();
             $resData['imgUrl'] = $imgUrl;
             $resData['imgName'] = $img;

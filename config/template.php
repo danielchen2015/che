@@ -38,7 +38,7 @@ return [
         '__CSS__' => '/static/admin/css',
         '__IMG__' => '/static/admin/img',
         '__ASSETS__' => '/static/admin/assets',
-        '__IMAGE__' => 'http://che.xingyizxmr.com:8080',
+        '__IMAGE__' => 'https://che.xingyizxmr.com',
         //'__IMAGE__' => 'http://che',
     ],
 ];
