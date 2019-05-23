@@ -13,10 +13,10 @@
         },
         "version": "1.0"
     },
-    "host": "che.xingyizxmr.com:8080",
+    "host": "che.xingyizxmr.com",
     "basePath": "",
     "schemes": [
-        "http"
+        "https"
     ],
     "paths": {
         "/api/areas/getprovince": {

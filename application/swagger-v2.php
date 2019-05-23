@@ -2,8 +2,8 @@
 
 /**
  * @SWG\Swagger(
- *     schemes={"http"},
- *     host="che.xingyizxmr.com:8080",
+ *     schemes={"https"},
+ *     host="che.xingyizxmr.com",
  *     basePath="",
  *     @SWG\Info(
  *         version="1.0",
