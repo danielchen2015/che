@@ -186,8 +186,69 @@ class User extends Base
         $arr = json_decode($res, true);
 
         $result = $model->wxdecode($encryptedData, $iv, $arr['session_key'], $appid);
+        $result->session_key = $arr['session_key'];
 
         //return json($result);
+        if ($result) {
+            return Response::create(['resultCode' => 000, 'resultMsg' => $result], 'json', 200);
+        } else {
+            return Response::create(['resultCode' => 400, 'resultMsg' => -1], 'json', 200);
+        }
+
+    }
+
+    /**
+     * @SWG\Get(
+     *     path="/api/User/getUserPhone?session_key={session_key}&encryptedData={encryptedData}&iv={iv}",
+     *     tags={"1-用户管理部分接口"},
+     *     operationId="getUserPhone",
+     *     summary="1.4-获取用户信息手机号",
+     *     description="获取用户信息(为小程序使用)。code\encryptedData\iv。",
+     *     consumes={"application/json"},
+     *     @SWG\Parameter(
+     *         name="session_key",
+     *         in="query",
+     *         description="session_key",
+     *         required=false,
+     *         format="string",
+     *     ),
+     *     @SWG\Parameter(
+     *         name="encryptedData",
+     *         in="query",
+     *         description="encryptedData",
+     *         required=false,
+     *         format="string",
+     *     ),
+     *     @SWG\Parameter(
+     *         name="iv",
+     *         in="query",
+     *         description="iv",
+     *         required=false,
+     *         format="string",
+     *     ),
+     *     produces={"application/json"},
+     *     @SWG\Response(
+     *         response="200",
+     *         description="添加成功",
+     *         @SWG\Schema(ref="#/definitions/ApiResponse")
+     *     ),
+     *     security={{"petstore_auth":{"write:loginWxxcx", "read:loginWxxcx"}}}
+     * )
+     */
+    public function getUserPhone(Request $request)
+    {
+        $session_key = $request->param('session_key');
+        $encryptedData = $request->param('encryptedData');
+        $iv = $request->param('iv');
+
+        $appid = "wx393bffa0355c7f37";
+        $secret = "ea0bbaa3913fa7d74abf7430f249d34a";
+        //appid={$appid}&secret={$secret}&js_code={$code}&grant_type=authorization_code
+
+        $model = new \app\api\model\User();
+
+        $result = $model->decryptData2($encryptedData, $iv, $session_key);
+
         if ($result) {
             return Response::create(['resultCode' => 000, 'resultMsg' => $result], 'json', 200);
         } else {

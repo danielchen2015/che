@@ -1,8 +1,8 @@
 {
     "swagger": "2.0",
     "info": {
-        "title": "\u5168\u56fd\u5144\u5f1f\u60c5\u7cbe\u9009\u8f66 API\u63a5\u53e3",
-        "description": "\u5168\u56fd\u5144\u5f1f\u60c5\u7cbe\u9009\u8f66API\u63a5\u53e3\uff0c\u7528\u4e8e\u524d\u7aef\u5c0f\u7a0b\u5e8f\u8c03\u7528\u3002",
+        "title": "\u5144\u5f1f\u60c5\u8f66\u8054\u76df\u7cbe\u9009\u8f66 API\u63a5\u53e3",
+        "description": "\u5144\u5f1f\u60c5\u8f66\u8054\u76df\u7cbe\u9009\u8f66API\u63a5\u53e3\uff0c\u7528\u4e8e\u524d\u7aef\u5c0f\u7a0b\u5e8f\u8c03\u7528\u3002",
         "termsOfService": "#",
         "contact": {
             "email": "daniel_c_tao@qq.com"
@@ -354,6 +354,61 @@
                         "name": "code",
                         "in": "query",
                         "description": "code",
+                        "required": false,
+                        "format": "string"
+                    },
+                    {
+                        "name": "encryptedData",
+                        "in": "query",
+                        "description": "encryptedData",
+                        "required": false,
+                        "format": "string"
+                    },
+                    {
+                        "name": "iv",
+                        "in": "query",
+                        "description": "iv",
+                        "required": false,
+                        "format": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "\u6dfb\u52a0\u6210\u529f",
+                        "schema": {
+                            "$ref": "#/definitions/ApiResponse"
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "petstore_auth": [
+                            "write:loginWxxcx",
+                            "read:loginWxxcx"
+                        ]
+                    }
+                ]
+            }
+        },
+        "/api/User/getUserPhone?session_key={session_key}&encryptedData={encryptedData}&iv={iv}": {
+            "get": {
+                "tags": [
+                    "1-\u7528\u6237\u7ba1\u7406\u90e8\u5206\u63a5\u53e3"
+                ],
+                "summary": "1.4-\u83b7\u53d6\u7528\u6237\u4fe1\u606f\u624b\u673a\u53f7",
+                "description": "\u83b7\u53d6\u7528\u6237\u4fe1\u606f(\u4e3a\u5c0f\u7a0b\u5e8f\u4f7f\u7528)\u3002code\\encryptedData\\iv\u3002",
+                "operationId": "getUserPhone",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "session_key",
+                        "in": "query",
+                        "description": "session_key",
                         "required": false,
                         "format": "string"
                     },

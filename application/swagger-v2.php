@@ -7,8 +7,8 @@
  *     basePath="",
  *     @SWG\Info(
  *         version="1.0",
- *         title="全国兄弟情精选车 API接口",
- *         description="全国兄弟情精选车API接口，用于前端小程序调用。",
+ *         title="兄弟情车联盟精选车 API接口",
+ *         description="兄弟情车联盟精选车API接口，用于前端小程序调用。",
  *         termsOfService="#",
  *         @SWG\Contact(
  *             email="daniel_c_tao@qq.com"

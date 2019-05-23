@@ -134,6 +134,20 @@ class User extends Base
     }
 
     /**
+     * @param $encryptedData
+     * @param $iv
+     * @param $session_key
+     */
+    public function decryptData2($encryptedData, $iv, $session_key)
+    {
+        $aesKey = base64_decode($session_key);
+        $aesIV = base64_decode($iv);
+        $aesCipher = base64_decode($encryptedData);
+        $result = openssl_decrypt($aesCipher, "AES-128-CBC", $aesKey, 1, $aesIV);
+        return json_decode($result);
+    }
+
+    /**
      * 检验数据的真实性，并且获取解密后的明文.
      * @param $encryptedData string 加密的用户数据
      * @param $iv string 与用户数据一同返回的初始向量
