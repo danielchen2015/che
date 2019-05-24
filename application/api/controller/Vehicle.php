@@ -166,28 +166,37 @@ class Vehicle extends Base
         $openid = $request->get("openid");
         $id = $request->get("id");
 
-        if (empty($openid) || empty($id)) {
+        if (empty($id)) {
             return Response::create(['resultCode' => 4000, 'resultMsg' => '请求参数错误！'], 'json', 400);
         }
         try {
             $params = array();
 
             $model = new \app\api\model\Vehicle();
-            $userinfo = $model->getuserid($openid);
 
-            if (empty($userinfo)) {
-                return Response::create(['resultCode' => 202, 'resultMsg' => '没有该用户！'], 'json', 202);
-            }
             $params["id"] = $id;
             $returnData = $model->vehicleinfo($params);
-            if ($returnData['opr_user'] == $userinfo['userid']) {
-                $returnData['self'] = "yes";
-            } else {
-                $returnData['self'] = "no";
-            }
+
             $config = $model->getconfig();
             $returnData['weixinimg1'] = $config['weixinimg1'];
             $returnData['weixinimg2'] = $config['weixinimg2'];
+
+            if (!empty($openid)) {
+                $userinfo = $model->getuserid($openid);
+
+                if (empty($userinfo)) {
+                    return Response::create(['resultCode' => 202, 'resultMsg' => '没有该用户！'], 'json', 202);
+                }
+
+                if ($returnData['opr_user'] == $userinfo['userid']) {
+                    $returnData['self'] = "yes";
+                } else {
+                    $returnData['self'] = "no";
+                }
+
+            } else {
+                $returnData['self'] = "no";
+            }
             //print_r($returnData);
             //exit;
             // if($returnData[''])
@@ -279,8 +288,8 @@ class Vehicle extends Base
         $status = $request->param("status");
 
         if (!empty($self)) {
-            if($self == 1){
-                if(empty($openid)){
+            if ($self == 1) {
+                if (empty($openid)) {
                     return Response::create(['resultCode' => 4000, 'resultMsg' => '请先登录！'], 'json', 400);
                 }
             }
@@ -323,7 +332,7 @@ class Vehicle extends Base
             $returnData = $model->vehicleinfo($params);
 
             if (!empty($returnData)) {
-                foreach ($returnData as &$item){
+                foreach ($returnData as &$item) {
                     $item['vehicleimgs'] = str_replace('[', '', $item['vehicleimgs']);
                     $item['vehicleimgs'] = str_replace(']', '', $item['vehicleimgs']);
                     $item['vehicleimgs'] = str_replace('"', '', $item['vehicleimgs']);
