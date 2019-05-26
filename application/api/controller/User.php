@@ -182,7 +182,7 @@ class User extends Base
         $model = new \app\api\model\User();
         //http函数为封装的请求函数
         $res = $model->http("https://api.weixin.qq.com/sns/jscode2session", $param, 'get');
-
+		
         $arr = json_decode($res, true);
 
         $result = $model->wxdecode($encryptedData, $iv, $arr['session_key'], $appid);

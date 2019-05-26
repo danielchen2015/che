@@ -115,11 +115,23 @@ class Upload extends Base
             $saveName = str_replace("\\", "/", $info->getSaveName());
             $img = '/upload/' . date('Ymd') . '/' . $saveName;
             $imgUrl = 'https://che.xingyizxmr.com/upload/' . date('Ymd') . '/' . $saveName;
-            $resData = array();
-            $resData['imgUrl'] = $imgUrl;
-            $resData['imgName'] = $img;
 
-            return Response::create(['resultCode' => 200, 'resultMsg' => $resData], 'json', 200);
+            $resData = array(
+                "imgUrl" => $imgUrl,
+                "imgName" => $img
+            );
+
+            $resA = array(
+                "resultCode" => 200,
+                "resultMsg" => $resData
+            );
+
+            $returnData = json_decode(json_encode($resA, true));
+
+            return str_replace("\\/", "/",json_encode($returnData, JSON_FORCE_OBJECT));
+//            $returnData->imgUrl = str_replace("\\/", "/", $returnData->imgUrl);
+//            $returnData->imgName = str_replace("\\/", "/", $returnData->imgName);
+            //return Response::create(['resultCode' => 200, 'resultMsg' => $returnData], 'json', 200);
         } else {
             return Response::create(['resultCode' => 4000, 'resultMsg' => '上传文件错误'], 'json', 400);
         }
