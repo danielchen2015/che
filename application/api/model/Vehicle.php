@@ -7,6 +7,7 @@
  */
 
 namespace app\api\model;
+
 use think\Db;
 
 class Vehicle extends Base
@@ -22,14 +23,13 @@ class Vehicle extends Base
         return Db::table('che_vehicle')->data($data)->insert();
 
     }
+
     /**
      * @param $openid
      * 获取用户信息
      */
     public function getuserid($openid)
     {
-        //print_r($data);
-        //exit;
         $returnData = Db::table('che_user')->where("openid", '=', $openid)->find();
         if (!empty($returnData)) {
             return $returnData;
@@ -38,14 +38,13 @@ class Vehicle extends Base
         }
 
     }
+
     /**
      * @param $openid
      * 获取配置文件
      */
     public function getconfig()
     {
-        //print_r($data);
-        //exit;
         $returnData = Db::table('che_config')->limit(1)->find();
         if (!empty($returnData)) {
             return $returnData;
@@ -54,69 +53,54 @@ class Vehicle extends Base
         }
 
     }
+
     /**
- * @param $data
- * 车辆信息
- */
+     * @param $data
+     * 车辆信息
+     */
     public function vehicleinfo($data)
     {
-        /* $leval=0;
-         $parameter="";
-         foreach ($data as $key=>$value){
-             $leval++;
-             $parameter=$key;
-         }
-         if($leval==1){
-             $returnData = Db::table('che_vehicle')
-                 ->where($parameter, '=', $data[$parameter])
-                 ->select();
-         }else{
-             $returnData = Db::table('che_vehicle')
-                 ->where('id', '=', $data['id'])
-                 ->where('opr_user', '=', $data['opr_user'])
-                 ->select();
-         }*/
         $returnData = Db::table('che_vehicle')
             ->where($data)
+            ->order('id desc')
             ->select();
-        //print_r( $returnData);
 
-        //$returnData[0][]=
         if (!empty($returnData)) {
-            //$returnData['']
-            $returnData[0]['contacttel']= "15145062876";            //add by daniel
+            $returnData[0]['contacttel'] = "15145062876";            //add by daniel
             return $returnData;
         } else {
             return null;
         }
 
     }
+
     /**
      * @param $data
      * 更新车辆状态
      */
-    public function vehicleupdate($id,$status)
+    public function vehicleupdate($id, $status)
     {
         //print_r($data);
         //exit;
-        $change['status']=$status;
-        if($status==2){
-            $maxcode=$this->getmaxcode();
+        $change['status'] = $status;
+        if ($status == 2) {
+            $maxcode = $this->getmaxcode();
             //print_r($maxcode);
             //exit;
-            if(!empty($maxcode[0]['code'])){
-                $change['code']=$maxcode[0]['code']+1;
-            }else{
-                $change['code']=10000;
+            if (!empty($maxcode[0]['code'])) {
+                $change['code'] = $maxcode[0]['code'] + 1;
+            } else {
+                $change['code'] = 10000;
             }
 
         }
         return Db::table('che_vehicle')
-            ->where('id','=',$id)
+            ->where('id', '=', $id)
             ->update($change);
 
 
     }
+
     /**
      * @param
      * 获取code最大值

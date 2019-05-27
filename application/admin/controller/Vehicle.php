@@ -15,7 +15,8 @@ use think\Request;
 
 class Vehicle extends Controller
 {
-    public function vlist(Request $request){
+    public function vlist(Request $request)
+    {
         try {
             $model = new \app\admin\model\Vehicle();
             $returnData = $model->vehiclelist();
@@ -32,10 +33,11 @@ class Vehicle extends Controller
         return view("list");
     }
 
-    public function vehicleinfo(Request $request){
+    public function vehicleinfo(Request $request)
+    {
         try {
             $model = new \app\admin\model\Vehicle();
-            $id=$request->get("id");
+            $id = $request->get("id");
             $returnData = $model->vehicleinfo($id);
             $provinceinfo = $model->province();
             $cityinfo = $model->city($returnData['loc_province']);
@@ -45,14 +47,15 @@ class Vehicle extends Controller
         } catch (Exception $ex) {
             return $ex->getMessage();
         }
-        $returnData['vehicleimgs']=json_decode($returnData['vehicleimgs'],true);
+        $returnData['vehicleimgs'] = json_decode($returnData['vehicleimgs'], true);
         //print_r($returnData);
-        $this->assign('year', range(2000,2020,1));
-        $this->assign('month', range(1,12,1));
-        $temparr[]=["id"=>1,"name"=>"待审核"];
-        $temparr[]=["id"=>2,"name"=>"审核通过"];
-        $temparr[]=["id"=>3,"name"=>"审核不通过"];
-        $this->assign('vestatus',$temparr);
+        $this->assign('year', range(2000, 2020, 1));
+        $this->assign('month', range(1, 12, 1));
+        $temparr[] = ["id" => 1, "name" => "待审核"];
+        $temparr[] = ["id" => 2, "name" => "审核通过"];
+        $temparr[] = ["id" => 3, "name" => "审核不通过"];
+        $temparr[] = ["id" => 4, "name" => "已售"];
+        $this->assign('vestatus', $temparr);
         $this->assign('vehicleinfo', $returnData);
         $this->assign('provinceinfo', $provinceinfo);
         $this->assign('cityinfo', $cityinfo);
@@ -64,24 +67,49 @@ class Vehicle extends Controller
         return view("vehicleinfo");
     }
 
-    public function modifyvehile(Request $request){
+    public function modifyvehile(Request $request)
+    {
         $data = $request->post();
         if ($request->isPost()) {
             //获取表单POST的值
             $params = array();
             $id = $data['id'];
-            foreach ($data['data'] as $key => $value){
+            foreach ($data['data'] as $key => $value) {
                 $params[$key] = $value;
             }
-            $params["vehicleimgs"] = json_encode($params["vehicleimgs"],320);
-           // print_r($params);
-           // exit;
+            $params["vehicleimgs"] = json_encode($params["vehicleimgs"], 320);
+            // print_r($params);
+            // exit;
             //unset($params['id']);
 
 
             try {
                 $model = new \app\admin\model\Vehicle();
-                $model->updatevehicleinfo($id,$params);
+                $model->updatevehicleinfo($id, $params);
+                $this->redirect('admin/vehicle/vlist');
+
+            } catch (Exception $ex) {
+                return $ex->getMessage();
+            }
+        }
+    }
+
+    /**
+     * @param Request $request
+     * @return string
+     * 删除车辆信息
+     */
+    public function deleteVehicle(Request $request)
+    {
+        $vehicleId = $request->param("id");
+        if (!empty($vehicleId)) {
+            //获取表单POST的值
+            $params = array();
+            $id = $vehicleId;
+
+            try {
+                $model = new \app\admin\model\Vehicle();
+                $model->deleteVehicle($id);
                 $this->redirect('admin/vehicle/vlist');
 
             } catch (Exception $ex) {

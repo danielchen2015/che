@@ -51,6 +51,12 @@ class Vehicle extends Base
             ->update($data);
 
     }
+
+    public function deleteVehicle($id){
+        $returnData = Db::table('che_vehicle')
+            ->where(["id"=>$id])
+            ->delete();
+    }
     /**
      * 返回省信息
      */

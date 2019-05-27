@@ -312,23 +312,28 @@ class Vehicle extends Base
             if (!empty($models)) {
                 $params[] = ['models', 'like', '%' . $models . '%'];
             }
-            if (!empty($status)) {
-                $params[] = ['status', '=', $status];
-            }
 
             $model = new \app\api\model\Vehicle();
-            $userinfo = $model->getuserid($openid);
-            if ($self == 1) {
-                $params[] = ['opr_user', '=', $userinfo['userid']];
-            } else {
-                if (empty($userinfo)) {
-                    if ($userinfo['roleid'] != 2) {//管理员显示所有车辆
-                        $params[] = ['status', '=', 2];
+            if (!empty($openid)) {
+                $userinfo = $model->getuserid($openid);
+                if ($self == 1) {
+                    $params[] = ['opr_user', '=', $userinfo['userid']];
+                } else {
+                    if (!empty($userinfo)) {
+                        if ($userinfo['roleid'] == 2) {//管理员显示所有车辆
+                            $params[] = ['status', 'in', '1, 2, 4'];
+                        } else {
+                            $params[] = ['status', 'in', '2, 4'];
+                        }
                     }
                 }
+            } else {
+                if (!empty($status)) {
+                    $params[] = ['status', 'in', '2, 4'];
+                }
             }
-            //print_r($params);
-            //exit;
+//            print_r($params);
+//            exit;
             $returnData = $model->vehicleinfo($params);
 
             if (!empty($returnData)) {
