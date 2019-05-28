@@ -17,7 +17,8 @@ class Vehicle extends Base
      */
     public function vehiclelist(){
         $returnData = Db::table('che_vehicle')
-            ->order('id desc')->limit(1000)->select();
+            ->order('id desc')
+            ->paginate(20);
 
         if (empty($returnData)) {
             return null;

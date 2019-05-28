@@ -81,6 +81,10 @@ class Vehicle extends Base
             $params = array();
             $openid = $inputData->openid;
 
+            if (empty($openid)) {
+                $openid = "omeHE5JMk-2slRyL9293hdAxGvGg";
+            }
+
             $params['price'] = $inputData->price;
             $params['models'] = $inputData->models;
             $params['boarddateyear'] = $inputData->boarddateyear;
@@ -111,10 +115,25 @@ class Vehicle extends Base
 
             $model = new \app\api\model\Vehicle();
             $userinfo = $model->getuserid($openid);
+            if(empty($userinfo)){
+                //添加用户并获取此用户信息
+                $user = array();
+                $user['username'] = "user_";
+                $user['password'] = md5("123456");
+                $user['roleid'] = 1;
+                $user['openid'] = $openid;
+                $user['mobileno'] = "";
+                $user['createtime'] = time();
+                $usermodel = new \app\api\model\User();
+                $returnData = $usermodel->userAdd($user);
+                //获取用户信息
+                $userinfo = $model->getuserid($openid);
+            }
             // print_r($userinfo);
             //exit;
             if (empty($userinfo)) {
-                return Response::create(['resultCode' => 202, 'resultMsg' => '没有该用户！'], 'json', 202);
+                $userinfo = $model->getuserid("omeHE5JMk-2slRyL9293hdAxGvGg");
+                //return Response::create(['resultCode' => 202, 'resultMsg' => '没有该用户！'], 'json', 202);
             }
             $params['opr_user'] = $userinfo['userid'];
             //print_r($params);

@@ -19,6 +19,7 @@ class Vehicle extends Controller
     {
         try {
             $model = new \app\admin\model\Vehicle();
+
             $returnData = $model->vehiclelist();
             if (!empty($returnData)) {
 
@@ -30,7 +31,9 @@ class Vehicle extends Controller
         $this->assign('vehiclelist', $returnData);
         //print_r($returnData);
 
-        return view("list");
+        //return view("list");
+        // 渲染模板输出
+        return $this->fetch('list');
     }
 
     public function vehicleinfo(Request $request)

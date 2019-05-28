@@ -104,15 +104,15 @@ class User extends Base
     public function info(Request $request)
     {
         $openid = $request->param('openid');
-        $mobileno = $request->param('mobileno');
-        if (empty($openid) && empty($mobileno)) {
+        //$mobileno = $request->param('mobileno');
+        if (empty($openid)) {
             return Response::create(['resultCode' => 4000, 'resultMsg' => '请求参数错误！'], 'json', 400);
         }
 
         try {
 
             $model = new \app\api\model\User();
-            $returnData = $model->userInfo($openid, $mobileno);
+            $returnData = $model->userInfo($openid);
 
             if (!empty($returnData)) {
                 return Response::create(['resultCode' => 200, 'resultMsg' => $returnData], 'json', 200);

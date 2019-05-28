@@ -50,8 +50,7 @@ class User extends Base
     {
         $returnData = Db::table('che_user')
             ->field(['userid', 'roleid', 'username', 'password', 'openid', 'mobileno', 'createtime', 'updatetime'])
-            ->whereOr('openid', '=', $openid)
-            ->whereOr('mobileno', '=', $mobileno)
+            ->where('openid', '=', $openid)
             ->order('userid desc')->limit(1)->select();
 
         if (!empty($returnData)) {
