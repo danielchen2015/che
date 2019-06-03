@@ -76,6 +76,31 @@ class Vehicle extends Base
 
     /**
      * @param $data
+     * @param int $pagesize
+     * @param int $pagenumber
+     * @return array|null|\PDOStatement|string|\think\Collection
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\ModelNotFoundException
+     * @throws \think\exception\DbException
+     */
+    public function vehcilelist($data, $pagenumber = 0, $pagesize = 10)
+    {
+        $returnData = Db::table('che_vehicle')
+            ->where($data)
+            ->order('id desc')
+            ->page($pagenumber, $pagesize)
+            ->select();
+
+        if (!empty($returnData)) {
+            $returnData[0]['contacttel'] = "15145062876";            //add by daniel
+            return $returnData;
+        } else {
+            return null;
+        }
+    }
+
+    /**
+     * @param $data
      * 更新车辆状态
      */
     public function vehicleupdate($id, $status)

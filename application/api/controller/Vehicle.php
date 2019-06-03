@@ -115,7 +115,7 @@ class Vehicle extends Base
 
             $model = new \app\api\model\Vehicle();
             $userinfo = $model->getuserid($openid);
-            if(empty($userinfo)){
+            if (empty($userinfo)) {
                 //添加用户并获取此用户信息
                 $user = array();
                 $user['username'] = "user_";
@@ -153,7 +153,7 @@ class Vehicle extends Base
      * @SWG\Get(
      *     path="/api/vehicle/getonevehicleinfo?id={id}&openid={openid}",
      *     tags={"3-车辆管理部分接口"},
-     *     operationId="getvehicleinfo",
+     *     operationId="getonevehicleinfo",
      *     summary="3.2-获取车辆信息",
      *     description="获取车辆信息(为小程序使用)。可只传一个参数id，获取我发布的车辆也是在这里",
      *     consumes={"application/json"},
@@ -354,6 +354,157 @@ class Vehicle extends Base
 //            print_r($params);
 //            exit;
             $returnData = $model->vehicleinfo($params);
+
+            if (!empty($returnData)) {
+                foreach ($returnData as &$item) {
+                    $item['vehicleimgs'] = str_replace('[', '', $item['vehicleimgs']);
+                    $item['vehicleimgs'] = str_replace(']', '', $item['vehicleimgs']);
+                    $item['vehicleimgs'] = str_replace('"', '', $item['vehicleimgs']);
+                    $item['vehicleimgs'] = str_replace('\\', '', $item['vehicleimgs']);
+                    $item['vehicleimgs'] = stripslashes($item['vehicleimgs']);
+                    $item['arr'] = explode(',', $item['vehicleimgs']);
+                }
+            }
+            if (!empty($returnData)) {
+                return Response::create(['resultCode' => 200, 'resultMsg' => $returnData], 'json', 200);
+            } else {
+                return Response::create(['resultCode' => 202, 'resultMsg' => '无车辆！'], 'json', 200);
+            }
+        } catch (Exception $e) {
+            return Response::create(['resultCode' => 4000, 'resultMsg' => $e->getMessage()], 'json', 400);
+        }
+    }
+
+    /**
+     * @SWG\Get(
+     *     path="/api/vehicle/getvehicleinfoNew?openid={openid}&pricefrom={pricefrom}&priceto={priceto}&timefrom={timefrom}&timeto={timeto}&models={models}&self=1",
+     *     tags={"3-车辆管理部分接口"},
+     *     operationId="getvehicleinfoNew",
+     *     summary="3.3-获取车辆信息",
+     *     description="获取车辆信息(为小程序使用)。可只传一个参数，获取我发布的车辆也是在这里",
+     *     consumes={"application/json"},
+     *     @SWG\Parameter(
+     *         name="openid",
+     *         in="query",
+     *         description="openid",
+     *         required=false,
+     *         format="string",
+     *     ),
+     *     @SWG\Parameter(
+     *         name="pricefrom",
+     *         in="query",
+     *         description="价格开始",
+     *         required=false,
+     *         format="string",
+     *     ),
+     *     @SWG\Parameter(
+     *         name="priceto",
+     *         in="query",
+     *         description="价格截止",
+     *         required=false,
+     *         format="string",
+     *     ),
+     *     @SWG\Parameter(
+     *         name="timefrom",
+     *         in="query",
+     *         description="时间开始",
+     *         required=false,
+     *         format="string",
+     *     ),
+     *     @SWG\Parameter(
+     *         name="timeto",
+     *         in="query",
+     *         description="时间截止",
+     *         required=false,
+     *         format="string",
+     *     ),
+     *     @SWG\Parameter(
+     *         name="models",
+     *         in="query",
+     *         description="车型",
+     *         required=false,
+     *         format="string",
+     *     ),
+     *     @SWG\Parameter(
+     *         name="self",
+     *         in="query",
+     *         description="如果要查自己发布的 那就加这个参数 值为1 不加默认所有",
+     *         required=false,
+     *         format="string",
+     *     ),
+     *     produces={"application/json"},
+     *     @SWG\Response(
+     *         response="200",
+     *         description="",
+     *         @SWG\Schema(ref="#/definitions/ApiResponse")
+     *     ),
+     *     security={{"petstore_auth":{"write:getvehicleinfoNew", "read:getvehicleinfoNew"}}}
+     * )
+     */
+    public function getvehicleinfoNew(Request $request)
+    {
+        $openid = $request->param("openid");
+        $pricefrom = $request->param("pricefrom");
+        $priceto = $request->param("priceto");
+        $timefrom = $request->param("timefrom");
+        $timeto = $request->param("timeto");
+        $models = $request->param("models");
+        $self = $request->param("self");
+        $status = $request->param("status");
+        $page = $request->param('page');
+
+        if (empty($page)) {
+            return Response::create(['resultCode' => 4000, 'resultMsg' => '参数错误！'], 'json', 400);
+        }
+
+        if (!empty($self)) {
+            if ($self == 1) {
+                if (empty($openid)) {
+                    return Response::create(['resultCode' => 4000, 'resultMsg' => '请先登录！'], 'json', 400);
+                }
+            }
+        }
+        try {
+            $params = array();
+
+            if (!empty($pricefrom)) {
+                $params[] = ['price', '>', $pricefrom];
+            }
+            if (!empty($priceto)) {
+                $params[] = ['price', '<', $priceto];
+            }
+            if (!empty($timefrom)) {
+                $params[] = ['opr_datetime', '>', $timefrom];
+            }
+            if (!empty($timeto)) {
+                $params[] = ['opr_datetime', '<', $timeto];
+            }
+            if (!empty($models)) {
+                $params[] = ['models', 'like', '%' . $models . '%'];
+            }
+
+            $model = new \app\api\model\Vehicle();
+            if (!empty($openid)) {
+                $userinfo = $model->getuserid($openid);
+                if ($self == 1) {
+                    $params[] = ['opr_user', '=', $userinfo['userid']];
+                } else {
+                    if (!empty($userinfo)) {
+                        if ($userinfo['roleid'] == 2) {//管理员显示所有车辆
+                            $params[] = ['status', 'in', '1, 2, 4'];
+                        } else {
+                            $params[] = ['status', 'in', '2, 4'];
+                        }
+                    }
+                }
+            } else {
+                if (!empty($status)) {
+                    $params[] = ['status', 'in', '2, 4'];
+                }
+            }
+//            print_r($params);
+//            exit;
+            $returnData = $model->vehcilelist($params, $page);
 
             if (!empty($returnData)) {
                 foreach ($returnData as &$item) {

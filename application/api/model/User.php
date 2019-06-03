@@ -46,7 +46,7 @@ class User extends Base
      * @param $mobileno
      * 返回用户数据信息
      */
-    public function userInfo($openid, $mobileno)
+    public function userInfo($openid, $mobileno = '')
     {
         $returnData = Db::table('che_user')
             ->field(['userid', 'roleid', 'username', 'password', 'openid', 'mobileno', 'createtime', 'updatetime'])
