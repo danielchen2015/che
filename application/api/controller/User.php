@@ -182,7 +182,7 @@ class User extends Base
         $model = new \app\api\model\User();
         //http函数为封装的请求函数
         $res = $model->http("https://api.weixin.qq.com/sns/jscode2session", $param, 'get');
-		
+
         $arr = json_decode($res, true);
 
         $result = $model->wxdecode($encryptedData, $iv, $arr['session_key'], $appid);
@@ -262,6 +262,29 @@ class User extends Base
         //return json($result);
         if ($result) {
             return Response::create(['resultCode' => 000, 'resultMsg' => $result], 'json', 200);
+        } else {
+            return Response::create(['resultCode' => 400, 'resultMsg' => -1], 'json', 200);
+        }
+
+    }
+
+    /**
+     * @param Request $request
+     */
+    public function getuserOpenId(Request $request)
+    {
+
+        $code = $request->param('code');
+        $appid = "wx393bffa0355c7f37";
+        $secret = "ea0bbaa3913fa7d74abf7430f249d34a";
+
+        $curl = 'https://api.weixin.qq.com/sns/jscode2session?appid=' . $appid . '&secret=' . $secret . '&js_code=' . $code . '&grant_type=authorization_code';
+        $model = new \app\api\model\User();
+        //http函数为封装的请求函数
+        $result = $model->http($curl, [], 'get');
+
+        if ($result) {
+            return Response::create(['resultCode' => 000, 'resultMsg' => json_decode($result)->openid], 'json', 200);
         } else {
             return Response::create(['resultCode' => 400, 'resultMsg' => -1], 'json', 200);
         }
