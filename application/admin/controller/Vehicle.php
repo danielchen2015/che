@@ -17,10 +17,12 @@ class Vehicle extends Controller
 {
     public function vlist(Request $request)
     {
+        $data = $request->post('args');
+
         try {
             $model = new \app\admin\model\Vehicle();
 
-            $returnData = $model->vehiclelist();
+            $returnData = $model->vehiclelist($data);
             if (!empty($returnData)) {
 
             }

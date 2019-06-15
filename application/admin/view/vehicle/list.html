@@ -80,10 +80,44 @@
                         <header class="panel-heading">
                             车辆列表
                         </header>
+                        <div class="panel-body">
+                            <form role="form" class="form-horizontal tasi-form" method="post">
+                                <div class="form-group">
+                                    <label class="col-lg-2 control-label">编号</label>
+                                    <div class="col-lg-1">
+                                        <input type="text" placeholder="" name="args[id]" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-lg-2 control-label">车辆名称</label>
+                                    <div class="col-lg-6">
+                                        <input type="text" placeholder="" name="args[models]" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-lg-2 control-label">车辆状态</label>
+                                    <div class="col-lg-1">
+                                        <select name="args[status]" class="form-control">
+                                            <option value="">请选择</option>
+                                            <option value="1">待审核</option>
+                                            <option value="2">审核通过</option>
+                                            <option value="3">审核不通过</option>
+                                            <option value="4">已售</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <div class="col-lg-offset-2 col-lg-10">
+                                        <button class="btn btn-danger" type="submit">查询</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
                         <table class="table table-striped table-advance table-hover">
                             <thead>
                             <tr>
-                                <th><i class="fa fa-bullhorn"></i> id</th>
+                                <th><i class="fa fa-bullhorn"></i> 编号</th>
                                 <th class="hidden-phone"><i class="fa fa-question-circle"></i> 车辆名称</th>
                                 <th><i class="fa fa-bookmark"></i> 出厂时间</th>
                                 <th><i class="fa fa-bookmark"></i> 上牌时间</th>
@@ -104,7 +138,7 @@
                                 <td><?=$value['boarddateyear'];?>-<?=$value['boarddatemonth'];?></td>
                                 <td><?=$value['guideprice'];?></td>
                                 <td><?=$value['price'];?></td>
-                                <td><?=$value['fixprice'];?></td>
+                                <td><?=$value['fixprice'];?><?=$value['status'];?></td>
                                 <td><span class="label <?php if($value['status']==1):?>label-warning label-mini">待审核<?php elseif($value['status']==2):?>label-primary label-mini">通过<?php elseif($value['status']==4):?> label-danger label-mini">已售<?php else: ?>label-danger label-mini">不通过<?php endif;?></span></td>
                                 <td>
                                     <a class="btn btn-success btn-sm" href="/index.php/admin/vehicle/vehicleinfo?id=<?=$value['id'];?>"><i class="fa fa-fw fa-edit"></i></a>

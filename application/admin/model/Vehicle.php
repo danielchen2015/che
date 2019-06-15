@@ -7,6 +7,7 @@
  */
 
 namespace app\admin\model;
+
 use think\Db;
 
 class Vehicle extends Base
@@ -15,10 +16,33 @@ class Vehicle extends Base
      * @param Response $request
      * 用户列表
      */
-    public function vehiclelist(){
-        $returnData = Db::table('che_vehicle')
-            ->order('id desc')
-            ->paginate(20);
+    public function vehiclelist($data)
+    {
+        if ($data["id"] != "") {
+            $returnData = Db::table('che_vehicle')
+                ->where("id", "=", $data["id"])
+                ->order('id desc')
+                ->paginate(20);
+        }
+        if ($data["models"] != "") {
+            $returnData = Db::table('che_vehicle')
+                ->where("models", 'like', "%".$data["models"]."%")
+                //->where("models", 'like', "'%" . $data["models"] . "%'")
+                ->order('id desc')
+                ->paginate(20);
+        }
+        if ($data["status"] != "") {
+            $returnData = Db::table('che_vehicle')
+                ->where("status", "=", $data["status"])
+                ->order('id desc')
+                ->paginate(20);
+        }
+
+        if (empty($returnData)) {
+            $returnData = Db::table('che_vehicle')
+                ->order('id desc')
+                ->paginate(20);
+        }
 
         if (empty($returnData)) {
             return null;
@@ -31,9 +55,10 @@ class Vehicle extends Base
      * @param Response $request
      * 用户列表
      */
-    public function vehicleinfo($id){
+    public function vehicleinfo($id)
+    {
         $returnData = Db::table('che_vehicle')
-            ->where(["id"=>$id])
+            ->where(["id" => $id])
             ->select()[0];
 
         if (empty($returnData)) {
@@ -42,22 +67,26 @@ class Vehicle extends Base
             return $returnData;
         }
     }
+
     /**
      * @param Response $request
      * 更新用户信息
      */
-    public function updatevehicleinfo($id,$data){
+    public function updatevehicleinfo($id, $data)
+    {
         $returnData = Db::table('che_vehicle')
-            ->where(["id"=>$id])
+            ->where(["id" => $id])
             ->update($data);
 
     }
 
-    public function deleteVehicle($id){
+    public function deleteVehicle($id)
+    {
         $returnData = Db::table('che_vehicle')
-            ->where(["id"=>$id])
+            ->where(["id" => $id])
             ->delete();
     }
+
     /**
      * 返回省信息
      */
@@ -81,11 +110,11 @@ class Vehicle extends Base
     {
         $res = Db::table('provinces')
             ->field(['provinceid'])
-            ->where('province','=',$provinname)//如果是等号，=可以省略
+            ->where('province', '=', $provinname)//如果是等号，=可以省略
             ->find();//如果是主键查询，可省略上面where,这行写->find(20);
 
         $returnData = Db::table('cities')
-            ->where("provinceid","=",$res['provinceid'])
+            ->where("provinceid", "=", $res['provinceid'])
             ->select();
         if (!empty($returnData)) {
             return $returnData;
@@ -94,6 +123,7 @@ class Vehicle extends Base
         }
 
     }
+
     /**
      * 返回地区信息
      */
@@ -101,10 +131,10 @@ class Vehicle extends Base
     {
         $res = Db::table('cities')
             ->field(['cityid'])
-            ->where('city','=',$cityname)//如果是等号，=可以省略
+            ->where('city', '=', $cityname)//如果是等号，=可以省略
             ->find();//如果是主键查询，可省略上面where,这行写->find(20);
         $returnData = Db::table('areas')
-            ->where("cityid","=",$res['cityid'])
+            ->where("cityid", "=", $res['cityid'])
             ->select();
 
         if (!empty($returnData)) {
