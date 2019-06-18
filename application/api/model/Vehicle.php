@@ -100,6 +100,21 @@ class Vehicle extends Base
     }
 
     /**
+     *
+     * @param $data
+     */
+    public function vehicleCount($data)
+    {
+        $returnData = Db::name('che_vehicle')
+            ->field('id')
+            ->where($data);
+
+        $count = $returnData->count('id');//获取列表总数量
+
+        return $count;
+    }
+
+    /**
      * @param $data
      * 更新车辆状态
      */
@@ -124,6 +139,26 @@ class Vehicle extends Base
             ->update($change);
 
 
+    }
+
+    /**
+     * 更新价格
+     * @param $id
+     * @param $price
+     * @return int|string
+     * @throws \think\Exception
+     * @throws \think\exception\PDOException
+     */
+    public function vehiclePrice($id, $price)
+    {
+        $change['fixprice'] = $price;
+        if ($price > 0) {
+            return Db::table('che_vehicle')
+                ->where('id', '=', $id)
+                ->update($change);
+        }else{
+            return 0;
+        }
     }
 
     /**

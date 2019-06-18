@@ -506,6 +506,8 @@ class Vehicle extends Base
 //            exit;
             $returnData = $model->vehcilelist($params, $page);
 
+            $returnCount = $model->vehicleCount($params);
+
             if (!empty($returnData)) {
                 foreach ($returnData as &$item) {
                     $item['vehicleimgs'] = str_replace('[', '', $item['vehicleimgs']);
@@ -517,12 +519,12 @@ class Vehicle extends Base
                 }
             }
             if (!empty($returnData)) {
-                return Response::create(['resultCode' => 200, 'resultMsg' => $returnData], 'json', 200);
+                return Response::create(['resultCode' => 200, 'resultMsg' => $returnData, 'resultCount' => ceil($returnCount / 10)], 'json', 200);
             } else {
-                return Response::create(['resultCode' => 202, 'resultMsg' => '无车辆！'], 'json', 200);
+                return Response::create(['resultCode' => 202, 'resultMsg' => '无车辆！', 'resultCount' => 0], 'json', 200);
             }
         } catch (Exception $e) {
-            return Response::create(['resultCode' => 4000, 'resultMsg' => $e->getMessage()], 'json', 400);
+            return Response::create(['resultCode' => 4000, 'resultMsg' => $e->getMessage(), 'resultCount' => 0], 'json', 400);
         }
     }
 
@@ -572,6 +574,29 @@ class Vehicle extends Base
             //exit;
             $returnData = $model->vehicleupdate($id, $status);
             return Response::create(['resultCode' => 200, 'resultMsg' => '状态更新成功！'], 'json', 200);
+        } catch (Exception $e) {
+            return Response::create(['resultCode' => 4000, 'resultMsg' => $e->getMessage()], 'json', 400);
+        }
+    }
+
+    /**
+     * 更新价格(一口价)
+     * @param Request $request
+     * @return Response
+     */
+    public function updatePrice(Request $request)
+    {
+        $id = $request->get("id");
+        $price = $request->get("price");
+
+        if (empty($id)) {
+            return Response::create(['resultCode' => 4000, 'resultMsg' => '请求参数错误！'], 'json', 400);
+        }
+        try {
+
+            $model = new \app\api\model\Vehicle();
+            $returnData = $model->vehiclePrice($id, $price);
+            return Response::create(['resultCode' => 200, 'resultMsg' => '一口价更新成功！'], 'json', 200);
         } catch (Exception $e) {
             return Response::create(['resultCode' => 4000, 'resultMsg' => $e->getMessage()], 'json', 400);
         }
