@@ -336,7 +336,12 @@ class Vehicle extends Base
             if (!empty($openid)) {
                 $userinfo = $model->getuserid($openid);
                 if ($self == 1) {
-                    $params[] = ['opr_user', '=', $userinfo['userid']];
+                    if ($userinfo['roleid'] == 2) {//管理员显示所有车辆
+                        $params[] = ['status', 'in', '1'];
+                    } else {
+                        $params[] = ['status', 'in', '2, 4'];
+                        $params[] = ['opr_user', '=', $userinfo['userid']];
+                    }
                 } else {
                     if (!empty($userinfo)) {
                         if ($userinfo['roleid'] == 2) {//管理员显示所有车辆
